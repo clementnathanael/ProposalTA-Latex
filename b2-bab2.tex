@@ -1,0 +1,226 @@
+%==================================================================
+% Ini adalah bab 2
+% Silahkan edit sesuai kebutuhan, baik menambah atau mengurangi \section, \subsection
+%==================================================================
+
+\chapter[STUDI LITERATUR]{\\ STUDI LITERATUR}
+
+\section{Sistem Pakar}
+Sistem pakar (\textit{expert system}) merupakan salah satu cabang dari \textit{knowledge – based system}, di mana KBS sendiri memiliki representasi pengetahuan yang cukup umum, bisa melalui \textit{indirect acquisition}, yakni menggunakan pengumpulan data historis,\textit{ workshop} diskusi kelompok, observasi lapangan, dan sebagainya. Jika Selain itu, \textit{direct acquisition} juga dapat dilakukan dengan menggunakan konsultasi dengan dokter, dimana dokter dapat memberikan parameter maupun gejala – gejala untuk suatu penyakit tertentu. Selain itu, bisa juga dengan menggunakan studi literatur, dimana pengembang sistem akan melakukan eksplorasi secara mandiri terhadap domain persoalan yang ingin diatasi. 
+
+Akuisisi langsung (\textit{direct acquisition}) merupakan pendekatan fundamental dalam pembangunan sistem pakar di mana pengetahuan diekstraksi secara manual melalui interaksi langsung antara seorang \textit{knowledge engineer} dengan sumber pengetahuan. Metode utamanya adalah wawancara mendalam dengan pakar, di mana melalui berbagai teknik seperti diskusi berbasis kasus atau analisis protokol, \textit{knowledge engineer} berusaha melakukan proses penalaran dan strategi untuk dapat menggali pengetahuan yang lebih optimal dari seorang \textit{expert}. Untuk melengkapi dan memvalidasi informasi dari pakar, pendekatan ini juga memerlukan studi literatur yang intensif, di mana pengembang sistem harus mempelajari buku teks, jurnal ilmiah, dan manual untuk membangun fondasi pengetahuan domain yang kokoh. Selain itu, observasi terstruktur dapat digunakan untuk mengamati pakar saat bekerja di lingkungan nyata, memungkinkan penangkapan pengetahuan prosedural dan kontekstual yang mungkin terlewat dalam wawancara.
+
+Jika akuisisi langsung memerlukan interaksi secara intensif dengan \textit{expert}, berbeda halnya dengan akuisisi tidak langsung (\textit{indirect acquisition}). \textit{Indirect acquisition} lebih mengandalkan data dan observasi untuk mengurangi subjektivitas dan mempercepat proses. Metode ini mencakup observasi lapangan, \textit{workshop}, dan diskusi kelompok untuk memahami konteks kerja pakar atau mensintesis pengetahuan dari beberapa ahli sekaligus (Leake, 1991). Pendekatan yang lebih modern adalah menggunakan pengumpulan data historis, di mana algoritma \textit{machine learning} seperti ID3 yang dipelopori oleh Quinlan (1986), diterapkan untuk menginduksi atau menemukan aturan-aturan (misalnya, gejala-penyakit) secara otomatis dari ribuan contoh kasus. Pada praktiknya, pendekatan campuran yang mengombinasikan beberapa metode ini, seperti memulai dengan studi literatur, dilanjutkan dengan wawancara pakar, dan divalidasi dengan data historis, merupakan strategi yang paling efektif untuk membangun sistem pakar yang komprehensif dan andal.
+
+Sistem pakar yang akan dikembangkan ini pada dasarnya adalah KBS dengan representasi pengetahuan menggunakan seorang \textit{expert} / pakar dengan kombinasi menggunakan data historis. Dalam kasus ini, pakar yang dimaksud adalah orang yang berpengalaman dalam permasalahan tersebut, yakni menggunakan dokter sebagai pakarnya, disebabkan dokter mampu memberikan gejala – gejala dari suatu penyakit tertentu, sehingga untuk representasi pengetahuannya dapat menjadi lebih jelas.
+
+Arsitektur sistem pakar berbasis KBS terdiri atas 2 modul, yakni:
+\begin{enumerate}
+    \item \textit{Problem Solving Component}, yang terdiri atas \textit{interviewer} dan \textit{explanation component}.
+    \item Basis pengetahuan, yang terdiri atas \textit{case – specific facts}, \textit{intermediate results}, \textit{problem solution}, serta \textit{knowledge} yang didapat dari hasil \textit{learning}. 
+\end{enumerate}
+
+Arsitektur umum dari sistem pakar antara lain seperti \cref{fig:arsitektur kbs}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{gambar/kbs.png}
+    \caption{Arsitektur \textit{Knowledge – Based System} (Puppe, 1993)}
+    \label{fig:arsitektur kbs}
+\end{figure}
+
+Berdasarkan Barrett (1989), proses penyusunan \textit{expert system} antara lain sebagai berikut:
+\begin{enumerate}
+    \item Identifikasi
+    \begin{itemize}
+        \item Tahap identifikasi adalah langkah analisis kebutuhan awal dengan tujuan menentukan kebutuhan eksternal, format \textit{input} dan \textit{output}, lingkungan penggunaan, dan pengguna akhir dari sistem.
+        \item Selain menentukan tujuan, akan diidentifikasi juga pakar yang akan digunakan, sumber daya, dan waktu.
+        \item \textit{Constraints} / batasan juga menjadi aspek penting untuk membatasi domain masalah agar sistem bisa menargetkan satu bagian tertentu saja secara spesifik untuk dilakukan analisis yang mendalam.
+    \end{itemize}
+    \item Konseptualisasi
+    \begin{itemize}
+        \item Tahap ini merupakan proses desain awal program dibuat dengan fokus untuk mengidentifikasi konsep, hubungan antar sub-sistem, dan mekanisme kontrol (alur penalaran) dalam domain masalah.
+        \item \textit{Knowledge engineer} akan menanyakan pertanyaan-pertanyaan mendalam untuk memahami cara kerja pakar, seperti:
+        \begin{enumerate}
+            \item[-] Keputusan apa yang dibuat oleh pakar?
+            \item[-] Informasi (\textit{input}) apa yang dibutuhkan untuk membuat keputusan tersebut?
+            \item[-] Kondisi apa saja yang mengarah pada hasil tertentu?
+        \end{enumerate}
+        \item  Tujuannya adalah untuk mendekomposisi proses pengambilan keputusan pakar, mulai dari yang kompleks menjadi komponen-komponen yang lebih kecil dan dapat dipahami.
+    \end{itemize}
+    \item Formalisasi
+    \begin{itemize}
+        \item Tahap formalisasi merupakan tahap di mana konsep, sub-masalah, dan alur informasi yang telah diidentifikasi sebelumnya diorganisasikan ke dalam representasi formal (misalnya aturan, frames, atau pohon keputusan). Dalam kasus ini, representasi pengetahuan yang akan digunakan adalah graf pengetahuan / \textit{knowledge graph}.
+        \item Dalam membuat suatu \textit{knowledge graph}, sistem akan melakukan penelurusan (traversal) graf dari satu \textit{node} ke \textit{node} lain melalui serangkaian hubungan (\textit{edge}). Keberadaan, panjang, atau jenis jalur ini menjadi dasar keputusan.
+        \item Selain mencari jalur, dapat dilakukan juga untuk dilakuakn penalaran berbasis aturan (\textit{rule – based reasoning}), di mana akan didefinisikan suatu aturan logis (semisal dalam format IF – ELSE) untuk dapat menyimpulkan hubungan atau properti baru yang tidak ada secara eksplisit / kompleks.
+    \end{itemize}
+    \item Implementasi
+    \begin{itemize}
+        \item Tahapan ini merupakan tahap di mana pengetahuan yang telah diformalkan (aturan, struktur, alur kontrol) ditransformasikan  ke dalam \textit{software} atau \textit{tools} pengembangan, di mana hasil dari tahap ini adalah sebuah prototipe sistem pakar yang berfungsi (\textit{working prototype}).
+        \item Sistem harus menyertakan penjelasan dari sistem yang sudah dikembangkan, dengan tujuan untuk membantu pengguna memahami pertanyaan yang diajukan oleh sistem, memungkinkan pengguna memanfaatkan \textit{output} atau rekomendasi secara efektif, serta menunjukkan kepada pengguna alur logika bagaimana sistem sampai pada sebuah kesimpulan, untuk membangun kepercayaan.
+        \item Dalam pengembangan ini, sistem juga dapat diintegrasikan dengan basis data rekam medis elektronik (RME) untuk dapat menarik data terkait pasien yang dianalisis oleh sistem.
+    \end{itemize}
+    \item Pengujian
+    \begin{itemize}
+        \item Pengujian bertujuan untuk menguji kebenaran pengetahuan dan kegunaan sistem secara keseluruhan.
+        \item Terdapat 3 aktivitas utama dalam pengujian ini, antara lain:
+        \begin{enumerate}
+            \item[-] Verifikasi: Memastikan bahwa model dan aturan di dalam program secara akurat mencerminkan pengetahuan yang sebenarnya. Hal ini dapat diuji dengan meminta pakar domain menguji sistem untuk semua kemungkinan skenario untuk memastikan logikanya benar dan tidak ada yang terlewat.
+            \item[-] Validasi: Memastikan bahwa program yang dibangun benar-benar menyelesaikan masalah yang dimaksud dan outputnya sesuai dengan solusi dari pakar manusia. 
+            \item[-] Evaluasi: Menilai kegunaan dan nilai praktis dari sistem di dunia nyata setelah diimplementasikan.
+        \end{enumerate}
+        \item Diperlukan juga \textit{user acceptance testing} (UAT) untuk memastikan bahwa pengguna memahami alur dan kinerja dari sistem.
+    \end{itemize}
+\end{enumerate}
+
+\section{\textit{Rule – based Expert System}}
+Salah satu \textit{tools} untuk mengembangkan sistem pakar adalah CLIPS. CLIPS (\textit{C Language Integrated Production System}) adalah kakas pengembangan sistem pakar, ditulis dalam bahasa C, yang menyediakan sarana untuk membuat konstruksi berbasis aturan dan/atau objek (Riley, 1999). Beberapa komponen utama dari CLIPS, antara lain:
+\begin{enumerate}
+    \item \textit{Fact List}
+        \begin{itemize}
+            \item Merupakan \textit{working memory} dari sistem.
+            \item Berisi semua fakta atau data yang diketahui oleh sistem pada saat itu. Fakta ini bisa berasal dari \textit{input} pengguna atau hasil dari eksekusi aturan sebelumnya.
+            \item Contoh fakta: (Pasien mengalami batuk), (Suhu pasien 39,5ºC).
+        \end{itemize}
+    \item \textit{Knowledge – Base}
+        \begin{itemize}
+            \item Merupakan sistem pakar yang dibangun.
+            \item Berisi kumpulan aturan-aturan dalam format IF–THEN. Aturan-aturan ini disebut \textit{productions}.
+        \end{itemize}
+    \item \textit{Inference Engine} / Mesin Inferensi
+        \begin{itemize}
+            \item Merupakan bagian yang akan melakukan penalaran.
+            \item Tugasnya adalah melakukan pengecekan terus-menerus dengan membandingkan fakta di \textit{Fact List} dengan kondisi dari semua aturan di \textit{Knowledge Base}.
+        \end{itemize}
+\end{enumerate}
+
+Berikut ini merupakan contoh dari kode CLIPS untuk mendeteksi penyakit paru – paru:
+\begin{lstlisting}
+
+    (defrule rule-diagnosis-tb
+       "Aturan untuk mendeteksi kemungkinan Tuberkulosis (TB)"
+       ?f <- (pasien (jenis-batuk dahak-kronis)
+                     (keringat-malam ya)
+                     (diagnosis belum-diketahui))
+       =>
+       (printout t "Aturan TB terpicu: Gejala batuk kronis dan keringat malam cocok." crlf)
+       (modify ?f (diagnosis Tuberkulosis))
+    )
+    
+    (defrule rule-diagnosis-pneumonia
+       "Aturan untuk mendeteksi kemungkinan Pneumonia"
+       ?f <- (pasien (jenis-batuk dahak-akut)
+                     (demam ya)
+                     (diagnosis belum-diketahui))
+       =>
+       (printout t "Aturan Pneumonia terpicu: Gejala batuk dahak akut dan demam cocok." crlf)
+       (modify ?f (diagnosis Pneumonia))
+    )
+    
+    (defrule rule-diagnosis-ppok
+       "Aturan untuk mendeteksi kemungkinan PPOK"
+       ?f <- (pasien (jenis-batuk dahak-kronis)
+                     (perokok-berat ya)
+                     (usia ?u &:(> ?u 40))
+                     (diagnosis belum-diketahui))
+       =>
+       (printout t "Aturan PPOK terpicu: Gejala batuk kronis, perokok, dan usia > 40 cocok." crlf)
+       (modify ?f (diagnosis PPOK))
+    )
+\end{lstlisting}
+
+\section{\textit{Knowledge Graph}}
+\textit{Knowledge Graph} (KG) merupakan sebuah cara merepresentasikan pengetahuan di dalam \textit{knowledge based system}, di mana informasi disimpan sebagai jaringan entitas berbentuk graf, dengan \textit{node} untuk merepresentasikan entitasnya (seperti "Diabetes Tipe 2", "Metformin") yang saling terhubung dengan \textit{edges} / sisi oleh relasi spesifik (seperti "diobatiDengan", "memilikiGejala"). Berbeda dengan aturan IF-THEN pada \textit{rule – based expert system}, \textit{knowledge graph} menangkap hubungan yang lebih kompleks, sehingga memungkinkan KBS untuk melakukan penalaran yang lebih efektif, misalnya menemukan hubungan tersembunyi antara obat dan efek samping melalui jalur koneksi. Fleksibilitas ini membuat \textit{knowledge graph} sangat ideal untuk domain kompleks seperti kesehatan, di mana pengetahuan terus berkembang dan data berasal dari berbagai sumber yang terpisah.
+
+Berdasarkan Nicholson \& Greene (2020), penggunaan \textit{knowledge graph}, terutama untuk bidang biomedis, mampu untuk menghubungkan data mutasi genetik seorang pasien dari sekuens genom, dengan jalur protein yang terdampak dari basis data biomedis yang ada, lalu ke artikel penelitian terbaru yang membahas jalur tersebut, dan akhirnya ke uji klinis yang relevan. Dengan demikian, \textit{knowledge graph} mampu untuk mengubah kumpulan fakta yang disampaikan oleh \textit{user} menjadi sebuah graf kompleks yang dapat dieksplorasi oleh mesin, sehingga memungkinkan aplikasi canggih seperti penemuan obat (\textit{drug discovery}) dengan mengidentifikasi target obat baru melalui analisis jalur dalam graf, dan \textit{personalized medicine}, di mana sistem dapat merekomendasikan terapi yang paling sesuai dengan menganalisis graf unik yang merepresentasikan profil molekuler dan klinis seorang pasien.
+
+Berikut ini merupakan contoh \textit{knowledge graph} untuk penyakit kanker paru – paru:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1]{gambar/kg.png}
+    \caption{Contoh \textit{knowledge graph} pada bidang medis.}
+    \label{fig:kg}
+\end{figure}
+
+Berikut ini merupakan langkah – langkah merancang \textit{knowledge graph} berdasarkan referensi dari Stegeman (2025):
+\begin{enumerate}
+    \item Merancang \textit{blueprint} pengetahuan dari graf.
+    \begin{itemize}
+        \item Menentukan entitas (\textit{nodes}) utama seperti Penyakit, Gejala, FaktorRisiko, Pemeriksaan, dan Obat.
+        \item Menentukan hubungan (\textit{edges} ntar entitas, seperti "memiliki gejala", "disebabkan oleh", "didiagnosis dengan", dan sebagainya.
+    \end{itemize}
+    \item Mengisi graf pengetahuan.
+    \begin{itemize}
+        \item Akan dilakukan pengumpulkan data dan fakta dari berbagai sumber untuk mengisi graf pengetahuan.
+        \item Pada kasus ini, akan dilakukan validasi dengan pakar, yakni dokter spesialis paru untuk memverifikasi hubungan dan menambahkan pengetahuan praktis yang tidak tertulis.
+    \end{itemize}
+    \item Membangun graf pengetahuan.
+    \begin{itemize}
+        \item Merupakan tahap rekayasa perangkat lunak di mana akan dimasukkan semua data yang telah dikumpulkan ke graf pengetahuan.
+        \item Untuk hal tersebut, akan dipilih basis data graf, seperti Neo4j atau GraphDB.
+    \end{itemize}
+    \item Evaluasi graf pengetahuan.
+    \begin{itemize}
+        \item Setelah graf dibuat, akan diajukan beberapa pertanyaan (\textit{query}) berdasarkan data pasien untuk mendapatkan kemungkinan diagnosis.
+        \item Selanjutnya akan ditampilkan daftar kemungkinan diagnosis yang diurutkan dari yang paling mungkin hingga yang kurang mungkin, beserta alasan (jalur di dalam graf) mengapa kesimpulan itu diambil.
+        \item Terakhir, akan dilakukan validasi untuk memastikan diagnosis yang diberikan oleh \textit{knowledge graph} sudah sesuai dengan pengetahuan dari dokter spesialis tersebut.
+    \end{itemize}
+\end{enumerate}
+
+\section{Penelitian Terkait}
+Beberapa penelitian terkait dengan sistem pakar, antara lain untuk sistem pakar untuk mendeteksi penyakit COVID-19 (Sofiansyah Fadli, 2024), sistem pakar untuk mendeteksi \textit{stroke} (Taddese kassu Yimenu, 2025), beserta sistem pakar untuk mendeteksi kehamilan (Gilang Aditia, 2022).
+\subsection{Sistem Pakar untuk COVID – 19 (Sofiansyah Fadli, 2024)}
+
+Pada jurnal ini, sistem pakar yang dianalisis menggunakan metode \textit{forward chaining} dalam menentukan konklusi dari fakta – fakta yang dimasukkan oleh pasien, dimana sistem bekerja dengan cara menelusuri data dari fakta-fakta yang ada (gejala yang dimasukkan oleh pengguna) menuju sebuah kesimpulan (diagnosis penyakit). Prosesnya dimulai dari aturan "IF" (jika pengguna mengalami gejala X), lalu bergerak menuju kesimpulan "THEN" (maka kemungkinan diagnosisnya adalah Y).
+
+Metode \textit{knowledge based} yang digunakan, memiliki teknik untuk menangani ketidakpastian dalam diagnosis (misalnya, tingkat keyakinan pengguna terhadap gejala yang dialami), yakni menggunakan \textit{certainty factor}. Metode ini menghitung nilai keyakinan (dalam bentuk persentase) untuk setiap kemungkinan diagnosis berdasarkan jawaban pengguna dan bobot yang telah ditentukan oleh pakar. Berikut ini merupakan contoh tabel nilai \textit{certainty factor} per diagnosis yang diberikan:
+\begin{table}[htbp]
+    \centering
+    \caption{Contoh tabel \textit{certainty factor} yang dibangun (Sofiansyah, 2024).}
+    \includegraphics[scale=0.6]{gambar/certainty 2.png}
+    \label{tab:tabel_dari_gambar}
+\end{table}
+
+Akuisisi pengetahuan untuk sistem ini diperoleh dari studi literatur, basis data medis, dan wawancara dengan pakar dari Puskesmas Praya yang telah menangani kasus COVID-19. Proses pengujian dilakukan dengan menggunakan metode \textit{Black-Box Testing} untuk memastikan fungsionalitasnya berjalan sesuai yang diharapkan tanpa melihat kode internalnya.
+
+Sistem pakar ini dirancang untuk mendiagnosis COVID-19 ke dalam tiga kategori, yakni negatif, reaktif, dan positif. Pengetahuan yang didapat dari pakar diterjemahkan ke dalam basis aturan (\textit{production rules}) yang mencakup 20 gejala yang terkait dengan COVID-19. Pengguna kemudian berinteraksi dengan sistem melalui serangkaian pertanyaan mengenai gejala yang mereka rasakan. Jawaban pengguna (misalnya, "Sangat Yakin", "Yakin", "Tidak Yakin") kemudian dikonversi menjadi nilai numerik. Sistem kemudian melakukan perhitungan menggunakan metode \textit{forward chaining} dan \textit{certainty factor} untuk menghasilkan persentase kemungkinan dari ketiga diagnosis tersebut. Hasil yang didapatkan antara lain sebagai berikut:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Hasil kalkulasi manual dan kalkulasi sistem (Sofiansyah, 2024).}
+    \includegraphics[scale=0.6]{gambar/hasil chaining.png}
+    \label{tab:hasil_kalkulasi}
+\end{table}
+
+Berdasarkan data hasil diagnosis antara perhitungan manual dan perhitungan sistem, hasil perhitungan sistem sangat akurat dan konsisten dengan perhitungan manual, yakni diagnosis negatif 82\%, reaktif 8\%, dan positif 12\%.
+
+\subsection{Sistem Pakar untuk Mendeteksi Stroke (Taddese kassu Yimenu, 2025)}
+Pada jurnal ini, sistem pakar yang dibangun dikombinasikan dengan \textit{machine learning}. Tujuannya adalah untuk menciptakan alat pendukung keputusan yang kuat bagi tenaga medis, memungkinkan mereka membuat diagnosis dan rencana perawatan stroke yang lebih baik, bahkan tanpa masukan langsung dari spesialis.
+
+Berikut ini merupakan arsitektur yang digunakan untuk merancang sistem pakar tersebut:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{gambar/arsitektur hybrid.png}
+    \caption{Arsitektur sistem pakar menggunakan \textit{machine learning} (Taddese, 2025)}
+    \label{fig:kg}
+\end{figure}
+
+Berdasarkan arsitektur sistem pakar tersebut, pada bagian kiri, alur \textit{machine learning} memproses data kuantitatif pasien melalui tahap \textit{preprocessing} dan pelatihan algoritma untuk menghasilkan sebuah \textit{new model} yang mampu melakukan \textit{stroke prediction} berbasis data. Sementara itu, pada bagian kanan, alur sistem pakar mengekstraksi pengetahuan kualitatif dari wawancara dan analisis dokumen, lalu merepresentasikannya menjadi \textit{domain expert rule} yang logis menggunakan \textit{rule – based}. Hasil dari arsitektur ini adalah model prediktif dari \textit{machine learning} dan aturan berbasis pengetahuan dari pakar yang digabungkan menjadi sebuah \textit{fused system}. Sistem gabungan inilah yang pada akhirnya menghasilkan sebuah \textit{user friendly treatment system} yang komprehensif, memberikan rekomendasi yang tidak hanya akurat secara statistik tetapi juga andal dan dapat dijelaskan secara klinis.
+
+Untuk komponen \textit{machine learning} menggunakan data pasien yang dikumpulkan dari rumah sakit dan \textit{dataset} publik di \textit{platform} Kaggle. Beberapa model \textit{machine learning} yang dievaluasi, antara lain \textit{decision tree}, \textit{random forest}, dan \textit{support vector machine} (SVM), yang diimplementasikan menggunakan Python. Untuk pemrosesan data, dilakukan seleksi Fitur untuk mengidentifikasi faktor risiko paling signifikan (seperti usia, kadar glukosa). Selain itu, digunakan juga SHAP (\textit{Shapley Additive Explanations}), untuk membuat model lebih dapat diinterpretasikan, yakni menjelaskan mengapa model membuat prediksi tertentu, dan SMOTE (\textit{Synthetic Minority Over-sampling Technique}) untuk menangani ketidakseimbangan data.
+
+Setelah dilakukan pembuatan model, didapatkan hasil percobaan sebagai berikut:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Hasil \textit{training model} untuk KBS (Taddese, 2025).}
+    \includegraphics[scale=0.5]{gambar/hasil ML hybrid.png}
+    \label{tab:hasil_ml_hybrid}
+\end{table}
+
+Dari evaluasi model \textit{machine learning}, didapatkan model \textit{random forest} menunjukkan performa terbaik dengan akurasi yang sangat tinggi, yaitu 99.4\%, setelah melalui proses validasi silang (\textit{k-fold cross-validation}). Selain itu, analisis menggunakan SHAP mengonfirmasi bahwa usia dan kadar glukosa adalah prediktor paling kuat untuk risiko stroke. Risiko stroke meningkat secara signifikan seiring bertambahnya usia dan kadar glukosa yang tinggi. Sistem gabungan ini juga berhasil menggabungkan \textit{rule – based system} dari Prolog dengan kemampuan prediksi dari model \textit{random forest}. Hasilnya adalah sistem pendukung keputusan yang tidak hanya akurat tetapi juga dapat memberikan penjelasan logis. Sistem ini diuji oleh para profesional medis (ahli saraf dan dokter umum), yang mengonfirmasi efektivitas dan kegunaannya sebagai alat bantu diagnosis dan perawatan stroke di lingkungan klinis.
+
+\subsection{Sistem Pakar untuk Mendeteksi Kehamilan (Gidang Aditia, 2022)}
+Pada jurnal ini, sistem pakar yang dianalisis menggunakan metode \textit{forward chaining} dengan cara mengumpulkan fakta-fakta (gejala yang dimasukkan oleh pengguna) terlebih dahulu, kemudian menelusuri aturan-aturan yang ada untuk sampai pada sebuah kesimpulan (diagnosis penyakit). Pengetahuan mengenai gejala dan penyakit kehamilan dikumpulkan melalui studi literatur dan konsultasi dengan pakar (dokter) untuk membangun aturan-aturan dalam sistem. Sistem ini dikembangkan sebagai aplikasi \textit{web} agar mudah diakses oleh siapa saja yang memiliki koneksi internet.
+
+Hasil dari sistem akan menampilkan daftar kemungkinan penyakit, lengkap dengan persentase tingkat kepercayaan (\textit{confidence level}) untuk setiap diagnosis. Selain hasil diagnosis, sistem juga memberikan halaman kesimpulan yang berisi penjelasan mengenai penyakit yang paling mungkin diderita, serta saran dan anjuran tindakan selanjutnya yang harus dilakukan. Namun, peneliti juga menekankan bahwa sistem ini hanyalah alat bantu diagnosis awal dan bukan pengganti konsultasi medis profesional. Pengguna sangat dianjurkan untuk tetap berkonsultasi langsung dengan dokter untuk mendapatkan diagnosis yang lebih akurat dan penanganan yang tepat.
+

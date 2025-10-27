@@ -1,0 +1,78 @@
+%==================================================================
+% Ini adalah bab 1
+% Silahkan edit sesuai kebutuhan, baik menambah atau mengurangi \section, \subsection
+%==================================================================
+
+\chapter[PENDAHULUAN]{\\ PENDAHULUAN}
+
+\section{Latar Belakang Masalah}
+Sektor kesehatan merupakan pilar fundamental dalam pembangunan kualitas hidup masyarakat. Seiring dengan kemajuan teknologi, tuntutan akan layanan kesehatan yang cepat, akurat, dan dapat diakses oleh semua kalangan semakin meningkat. Namun, di balik kemajuan tersebut, industri kesehatan masih menghadapi berbagai tantangan signifikan yang menghambat efisiensi dan efektivitas pelayanan. Kondisi ini menciptakan urgensi untuk mencari solusi inovatif yang dapat menjembatani kesenjangan antara kebutuhan pasien dan kapasitas penyedia layanan kesehatan.
+
+Salah satu permasalahan utama yang telah lama menjadi perhatian adalah keterbatasan jumlah tenaga medis, khususnya dokter, dibandingkan dengan populasi yang harus dilayani. Berdasarkan studi (Jurnal Ners, 2023), rasio dokter dan pasien yang tidak seimbang menyebabkan beban kerja yang berlebihan pada dokter, waktu tunggu yang lama bagi pasien, dan potensi penurunan kualitas layanan akibat kelelahan. Masalah ini semakin terasa dalam era digital, di mana \textit{platform telemedicine} seperti Halodoc menjadi populer. Data dari Halodoc menunjukkan bahwa dokter tidak selalu dapat melayani pasien secara paralel atau \textit{real-time} karena sedang melayani pasien lain, sehingga mengurangi aksesibilitas konsultasi instan yang diharapkan. Selain tantangan pada aspek pelayanan, dunia medis juga dihadapkan pada isu efektivitas pengobatan. Pendekatan pengobatan yang seringkali bersifat umum terbukti kurang efektif untuk pasien dengan kondisi klinis yang unik dan spesifik, semisal untuk mengobati kanker, di mana terkadang pengobatan seperti kemoterapi tidak cocok untuk diterapkan kepada semua pasien yang mengalami kanker. Proses untuk mengembangkan pengobatan yang dipersonalisasi memakan waktu yang sangat lama dan biaya yang besar, padahal hal ini krusial untuk hasil terapi yang optimal (\textit{National Library of Medicine}, 2020). Oleh karena itu, diperlukan suatu sistem yang dapat mendeteksi penyakit kepada pasien, dengan menggunakan bantuan pakar (\textit{expert system}), dengan metode \textit{knowledge graph} dalam melakukan representasi pengetahuan.
+
+\textit{Knowledge – based system}, dalam kasus ini adalah \textit{expert system}, masih relevan untuk digunakan, terutama dalam melakukan serangkaian pemecahan masalah. Saat ini, \textit{expert system} masih menjadi salah satu aplikasi utama dari AI di dalam bidang kesehatan (Ibnu, 2020). \textit{Knowledge – based system} sendiri pada dasarnya akan membantu dokter dalam melakukan diagnosis, di mana sistem akan melakukan proses diagnosis hingga dapat menghasilkan suatu keputusan. Keputusan tersebut nantinya yang akan menjadi bahan pertimbangan untuk dokter dalam menentukan diagnosis final dari penyakit paru – paru yang diderita oleh pasien.
+
+Penyakit paru – paru merupakan penyakit di bidang kesehatan yang tepat untuk menjadi domain pengembangan \textit{Knowledge – based system}. Berdasarkan data dari Hello Sehat tahun 2023, penyakit paru – paru, antara lain tuberkulosis dan PPOK (Penyakit Paru Obstruktif Kronik), menjadi 10 besar penyakit paling mematikan di Indonesia. Untuk tuberkulosis sendiri, menurut data WHO tahun 2014, jumlah kematian akibat TBC terus meningkat, bahkan diperkirakan lebih dari 100.000 kasus setiap tahunnya.
+
+Dengan demikian, \textit{Knowledge – based system} untuk mendiagnosis penyakit paru – paru masih penting dan relevan. Dengan masifnya perkembangan teknologi, \textit{Knowledge – based system} juga masih terus berkembang hingga sekarang. Saat ini, representasi pengetahuan dari KBS sendiri terdiri atas beberapa macam representasi yang dapat dilakukan, antara lain menggunakan \textit{rule – based} (representasi berdasarkan sekelompok aturan), \textit{formal logic} (representasi berdasarkan logika proposisional), \textit{knowledge graph} (representasi berdasarkan keterhubungan antar entitas), maupun menggunakan \textit{machine learning}. 
+
+Dibandingkan dengan \textit{rule – based} maupun dengan \textit{formal logic}, \textit{knowledge graph} unggul baik dalam sisi teknis maupun dalam sisi implementasi. Hal ini disebabkan adanya fleksibilitas dalam menghubungkan \textit{edges} dengan \textit{node} (dalam kasus ini gejala – gejala) dari penyakit paru – paru). Hal ini tentu sangat sulit jika menggunakan \textit{rule – based} maupun \textit{logic} karena akan melibatkan banyak sekali aturan yang saling tumpang tindih. Maka dari itu, penggunaan \textit{knowledge graph} yang dibangun dengan baik dapat digunakan untuk berbagai aplikasi \textit{downstream} dan dapat membuat model memiliki kemampuan \textit{reasoning} yang masuk akal (Shaoxiong Ji, 2021). Dengan demikian, \textit{knowledge graph} menjadi teknik yang paling optimal untuk menjadi representasi pengetahuan untuk \textit{knowledge – based system}. Untuk representasi menggunakan \textit{machine learning} tidak akan dilakukan disebabkan batasan dari tugas akhir ini untuk tidak mengembangkan \textit{learning agent} dalam KBS ini.
+
+Penggunaan \textit{knowledge – based agent} dalam bidang kesehatan juga sudah banyak dilakukan. Beberapa pengembangan dalam beberapa tahun terakhir antara lain digunakan untuk mendeteksi kehamilan, penyakit COVID - 19, stroke, dan sebagainya. 
+
+\section{Rumusan Masalah}
+Berdasarkan latar belakang tersebut, keterlibatan sistem pakar diperlukan untuk memperoleh sekumpulan pengetahuan yang dibutuhkan untuk menyelesaikan masalah kesehatan yang akan ditentukan kemudian. Pakar tersebut, dalam hal ini akan menargetkan dokter, berguna untuk menguji kebenaran solusi yang diusulkan oleh sistem. Permasalahan yang ingin dijawab adalah bagaimana merepresentasikan sekumpulan pengetahuan yang didapat oleh sistem pakar, menjadi suatu sistem cerdas yang dapat menjawab pertanyaan dari pasien itu sendiri. Terdapat beberapa hal yang dapat menjadi perumusan masalah, antara lain:
+\begin{enumerate}
+\item	Bagaimana representasi \textit{knowledge graph} dalam membangun suatu \textit{knowledge – based system} untuk domain kesehatan?
+\item	Bagaimana menyusun \textit{knowledge graph} dengan \textit{input} pengetahuan yang berasal dari pakar?
+\item Bagaimana kinerja dari \textit{knowledge – based system} yang memanfaatkan \textit{knowledge graph}?
+\end{enumerate}
+
+\section{Tujuan}
+Tujuan dari Tugas Akhir ini adalah untuk mengimplementasikan pengetahuan – pengetahuan  dari suatu sistem pakar, agar dapat menghasilkan suatu solusi maupun jawaban dari setiap pertanyaan yang diajukan oleh pasien. Untuk solusi yang nanti dihasilkan adalah diagnosis dari penyakit paru – paru berdasarkan gejala yang dimasukkan oleh pasien.
+
+\section{Batasan Masalah}
+Pada tugas akhir ini, akan diberikan batasan – batasan sebagai berikut:
+\begin{enumerate}
+\item Pengumpulan basis pengetahuan untuk \textit{knowledge – based system} diakuisisi dari pakar.
+\item	\textit{Knowledge – based system} yang dikembangkan tidak memiliki \textit{learning component} / \textit{learning agent}, sehingga sistem tidak dapat memperbaharui \textit{dataset} maupun pengetahuan yang dimiliki.
+\end{enumerate}
+
+\section{Metodologi}
+Beberapa tahapan yang digunakan untuk menyelesaikan tugas akhir, antara lain:
+\begin{enumerate}
+    \item Investigasi
+    \begin{enumerate}
+        \item[] Tahapan investigasi dilakukan dengan cara mencari literatur berupa \textit{paper} terkait dengan \textit{knowledge – based system}, \textit{expert system}, AI \textit{in Healthcare}, serta dengan laporan Tugas Akhir mahasiswa terdahulu.
+    \end{enumerate}
+    \item Analisis Pembangunan Solusi
+    \begin{enumerate}
+        \item[] Terdapat beberapa hal yang diperlukan dalam membangun \textit{knowledge – based system}, antara lain: 
+    \end{enumerate}
+        \begin{enumerate}
+            \item[1)] Identifikasi
+            \begin{itemize}
+                \item Pada tahap ini, akan ditentukan analisis kebutuhan awal dari KBS, yakni tujuan, batasan, lingkungan penggunaan, dan sebagainya.
+            \end{itemize}
+            \item[2)] Konseptualisasi
+            \begin{itemize}
+                \item Pada tahap ini, akan mulai dilakukan wawancara dengan pakar untuk mendapatkan pengetahuan yang dimiliki dan mengorganisasikan fakta yang didapat.
+            \end{itemize}
+            \item[3)] Formalisasi
+            \begin{itemize}
+                \item Pada tahap ini, akan dilakukan representasi pengetahuan dalam bentuk \textit{knowledge graph} berdasarkan pengetahuan yang sudah didapat dari sistem pakar.
+            \end{itemize}
+            \item[4)] Implementasi
+            \begin{itemize}
+                \item Pada tahap ini, prototipe dari \textit{knowledge graph} akan dihasilkan.
+            \end{itemize}
+            \item[5)] Pengujian
+            \begin{itemize}
+                \item Pada tahap ini, akan dilakukan pengujian dari sistem yang sudah dibangun, baik dari pakar maupun calon pengguna sistem.
+            \end{itemize}
+        \end{enumerate}
+    \item Uji Kelayakan
+    \begin{enumerate}
+        \item[] Dalam membuat suatu \textit{knowledge – based system}, diperlukan analisis kelayakan proyek \textit{knowledge – based system} terlebih dahulu. Hal ini dilakukan untuk memutuskan apakah suatu domain layak untuk dijadikan \textit{knowledge – based system} atau tidak. Dalam kasus ini, akan dilakukan analisis kelayakan yang dilakukan oleh seorang dokter spesialis yang akan menjadi pakar dalam pengembangan sistem ini.  
+    \end{enumerate}
+\end{enumerate}

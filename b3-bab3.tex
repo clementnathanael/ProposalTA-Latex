@@ -1,0 +1,61 @@
+%==================================================================
+% Ini adalah bab 3
+% Silahkan edit sesuai kebutuhan, baik menambah atau mengurangi \section, \subsection
+%==================================================================
+
+\chapter[ANALISIS MASALAH]{\\ ANALISIS MASALAH}
+
+\section{Analisis Kondisi Saat Ini}
+Dalam pembangunan sistem pakar, terdapat beberapa tahapan yang akan dilakukan untuk memastikan bahwa hasil akhir dari sistem yang dikembangkan akurat dan dapat digunakan oleh pengguna. Namun, tentu di setiap tahapan akan terdapat permasalahan yang mungkin dapat menghambat proses pengerjaaan sistem tersebut. Oleh karena itu, akan ditentukan beberapa masalah yang mungkin dihadapi berdasarkan tahapan pembangunan dari KBS, yakni identifikasi, konseptualisasi, formalisasi, implementasi, dan juga pengujian (Barrett, 1989).
+\begin{enumerate}
+    \item Identifikasi – Penentuan pakar yang sesuai.
+    \begin{itemize}
+        \item Dalam menyusun \textit{knowledge – based system} dengan menggunakan pakar sebagai akuisisi pengetahuan, maka menemukan pakar yang benar-benar kompeten, bisa berkomunikasi dengan baik, dan memiliki waktu untuk kesulitan tersendiri.
+        \item Kemampuan komunikasi dari pakar menjadi penentu dalam keberhasilan \textit{knowledge graph} yang dibangun, di mana jika pakar sulit berkomunikasi atau tidak memberikan detail yang cukup jelas, maka pengembang akan kesulitan untuk menentukan fakta – fakta apa saja yang perlu untuk dimodelkan.
+    \end{itemize}
+    \item Konseptualisasi – Pemodelan data yang tidak tepat.
+    \begin{itemize}
+        \item Dalam memodelkan data yang akan dipakai di dalam graf, tentu harus dilakukan pemodelan data dalam bentuk graf tersebut. Bagian pemodelan data graf menjadi bagian yang cukup krusial karena akan menjadi fondasi dari keseluruhan model yang akan dibangun.
+        \item Beberapa kesalahan yang mungkin terjadi, antara lain adalah generalisasi suatu gejala tertentu. Sebagai contoh, terdapat berbagai macam batuk, antara lain batuk berdahak, batuk kering, dan sebagainya. Namun, untuk kemudahan, maka kita akan men-generalisasikan menjadi satu \textit{node} "batuk" saja. 
+        \item Hal ini tentu dapat menyebabkan kesalahan diagnosis, karena bisa saja gejala batuk tersebut merupakan indikasi spesifik suatu penyakit tertentu, yang dapat berakibat kepada kesalahan diagnosis penyakit.
+    \end{itemize}
+    \item Formulasi – \textit{Knowledge graph} yang tidak dapat mengenal konteks.
+    \begin{itemize}
+        \item Sistem pakar tidak memiliki pemahaman mendasar tentang dunia, di mana sistem hanya mengikuti aturan secara harafiah tanpa adanya pemahaman konteks. 
+        \item Semisal sistem pakar dalam bidang kesehatan menerima \textit{input} dari pengguna. Jika pengguna salah memasukkan jumlah obat yang diminum, yakni 50 obat, padahal seharusnya hanya sekitar 5 obat, maka sistem pakar akan memproses data tersebut secara terang – terangan tanpa berpikir di balik layar jika ingin bukan merupakan hal yang logis (jika memang tidak ada \textit{constraints} / batasan yang membatasinya).
+        \item Sistem pakar juga didesain untuk bisa menjawab hal apapun yang bahkan diluar domain pengetahuannya, asalkan \textit{input} yang diterima masih dalam format yang sesuai. Semisal sistem pakar didesain untuk menganalisis penyakit TBC. Namun, jika ternyata terdapat pasien yang men– \textit{input} gejala Pneumonia, maka mungkin saja sistem masih dapat memberikan diagnosis untuk pasien tersebut berdasarkan gejala yang sesuai dari penyakit yang lain (jika misalkan penyakit yang di–\textit{input} oleh pasien memang diprogram secara eksplisit).
+    \end{itemize}
+    \item Implementasi – Kinerja dan skalabilitas dari \textit{knowledge graph}.
+    \begin{itemize}
+        \item Saat \textit{knowledge graph} yang dibuat menjadi sangat besar, \textit{query} yang tadinya cepat bisa menjadi sangat lambat. Implementasi graf tanpa dilakukan optimasi akan menimbulkan \textit{bottleneck} jika data yang diterima berskala besar.
+        \item Selain itu, implementasi dari \textit{rule engine} yang cukup banyak dan hanya untuk melakukan inferensi untuk satu penyakit saja dapat membuat sistem menjadi sangat lambat.
+    \end{itemize}
+    \item Evaluasi – Proses Perawatan dan pemeliharaan / \textit{maintenance}.
+    \begin{itemize}
+        \item Ketika jumlah aturan bertambah (dari ratusan menjadi ribuan), menjadi sangat sulit untuk menambahkan aturan baru tanpa menimbulkan kontradiksi atau efek samping dari aturan yang sudah ada.
+        \item Penting bagi pengembang untuk terus memperbarui sistem pakarnya, terutama untuk domain kesehatan, di mana penyakit tidak bersifat statis, namun bersifat dinamis, yang artinya setiap hari pasti ada informasi baru terkait suatu penyakit (semisal ada gejala baru, atau ada metode penyembuhan yang baru yang lebih efektif, dan sebagainya).
+    \end{itemize}
+    
+    
+\end{enumerate}
+
+\section{Analisis Kebutuhan}
+Berdasarkan analisis masalah di atas, dapat disimpulkan bahwa \textit{knowledge – based system} dengan menggunakan \textit{knowledge graph} sebagai representasi pengetahuan memerlukan: (To Be Continued)
+
+\subsection{Identifikasi Masalah Pengguna}
+(To Be Continued)
+
+\subsection{Kebutuhan Fungsional}
+(To Be Continued)
+
+\subsection{Kebutuhan Non – Fungsional}
+(To Be Continued)
+
+\section{Analisis Pemilihan Solusi}
+(To Be Continued)
+
+\subsection{Alternatif Solusi}
+(To Be Continued)
+
+\subsection{Analisis Penentuan Solusi}
+(To Be Continued)
