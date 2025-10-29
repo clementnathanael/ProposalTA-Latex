@@ -5,28 +5,46 @@
 %% DILARANG EDIT BAGIAN INI
 
 \begin{titlepage}
-    \begin{center}
+\begin{center}
 
-        \begin{doublespace}
-            \textbf{\Large{\MakeUppercase{\judulid}}}\\[2cm]
-        \end{doublespace}
-        \textbf{\MakeUppercase{\large{\tipe}}}\\[0.5cm]
+% Menambah jarak dari atas halaman
+% --- JUDUL ---
+% Menggunakan \bfseries di dalam grup dan \vspace untuk spasi
+{\Large\bfseries \MakeUppercase{\judulid}}
+\vspace{2cm}
 
-        \textbf{Disusun sebagai syarat kelulusan tingkat sarjana}\\[1.5cm]
+% --- TIPE DOKUMEN ---
+{\large\bfseries \tipe}
+\vspace{2.5cm}
 
-        \includegraphics[width=0.35\linewidth]{gambar/ganesha.jpg}\\[1.5cm]
+% --- PENULIS ---
+{\large Oleh}\\[0.3cm]
+% Mengelompokkan nama dan NIM dalam satu blok tebal
+\textbf{
+    {\large\penulis}\\
+    {\large\nim}
+}
+\vspace{2cm}
 
-        \textbf{Oleh:} \\
-        \textbf{\MakeUppercase{{\penulis}}} \\
-        \textbf{NIM:} \textbf{{\nim}}\\[2cm]
+% --- GAMBAR/LOGO ---
+% Menggunakan environment 'figure' seperti di referensi
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.35\linewidth]{gambar/ganesha.jpg}
+\end{figure}
 
-        \vfill
+% Mendorong konten berikutnya ke bagian bawah halaman
+\vfill
 
-        \textbf{\large \MakeUppercase{Program Studi \prodi}}\\
-        \textbf{\large \MakeUppercase{\fakultas}}\\
-        \textbf{\large \MakeUppercase{\universitas}}\\
-        \textbf{\large \the\year{}}\\
-    \end{center}
+% --- INSTITUSI ---
+% Mengelompokkan semua info institusi dalam satu blok tebal
+{\large\bfseries
+    \MakeUppercase{Program Studi \prodi}\\
+    \MakeUppercase{\fakultas}\\
+    \MakeUppercase{\universitas}\\
+    \MakeUppercase{\bulantahun}\\
+}
+\end{center}
 \end{titlepage}
 
 %% DILARANG EDIT BAGIAN INI

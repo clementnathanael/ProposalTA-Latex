@@ -10,6 +10,28 @@
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
 
+% --- Format bulan otomatis dalam Bahasa Indonesia ---
+\newcommand{\bulanindonesia}{
+  \ifcase\month
+  \or Januari%
+  \or Februari%
+  \or Maret%
+  \or April%
+  \or Mei%
+  \or Juni%
+  \or Juli%
+  \or Agustus%
+  \or September%
+  \or Oktober%
+  \or November%
+  \or Desember%
+  \fi
+}
+
+% --- Ubah ke format kapital semua (bulan + tahun) ---
+\newcommand{\bulantahun}{\MakeUppercase{\bulanindonesia\space\number\year}}
+
+
 
 % Untuk pengaturan spacing
 \usepackage{setspace}
@@ -65,23 +87,37 @@
 \renewcommand{\cftloftitlefont}{\hfil\large\bfseries\MakeUppercase}
 \renewcommand{\cftlottitlefont}{\hfil\large\bfseries\MakeUppercase}
 
+\renewcommand{\cftdot}{.}                 % Gunakan titik sebagai penghubung
+\renewcommand{\cftdotsep}{4.5}              % Jarak antar titik (semakin kecil = lebih rapat)
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftchapleader}{\bfseries\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
 % --- SOLUSI UTAMA: Mengubah format entri Bab di Daftar Isi ---
 % 1. Kita definisikan ulang \thechapter menjadi Romawi. Ini standar yang baik.
 \renewcommand{\thechapter}{\Roman{chapter}}
 
 % 2. Kita definisikan ulang awalan bab di Daftar Isi.
 %    Perintah ini sekarang akan mencetak "BAB " diikuti oleh \thechapter (yang sudah Romawi).
-\renewcommand{\cftchappresnum}{BAB \thechapter}
+\renewcommand{\cftchappresnum}{\thechapter}
 
 % 3. Kita beri tahu tocloft untuk TIDAK mencetak nomornya sendiri, karena kita sudah melakukannya di atas.
 %    Kita lakukan ini dengan mengatur lebar kotak nomornya menjadi 0.
-\setlength{\cftchapnumwidth}{0em}
+% Atur jarak indentasi agar semua sejajar
+\setlength{\cftchapnumwidth}{1.5em}   % Lebar kolom nomor BAB (I, II, III)
+\setlength{\cftsecnumwidth}{2.3em}    % Lebar kolom nomor sub-bab (I.1, I.2, dst.)
+\setlength{\cftsubsecnumwidth}{3.2em} % Kalau ada subsubsection
 
-% --- Mengatur indentasi agar judul bab tetap lurus ---
-\newlength\mylen
-% Hitung lebar berdasarkan entri terpanjang yang mungkin (misal, "BAB VIII")
-\settowidth\mylen{\bfseries BAB VIII} % \quad menambah sedikit spasi
-\cftsetindents{chap}{0em}{\mylen}
+% Samakan indent agar BAB dan sub-bab sejajar di kiri
+\setlength{\cftchapindent}{0em}
+\setlength{\cftsecindent}{0em}
+\setlength{\cftsubsecindent}{0em}
+
+% % --- Mengatur indentasi agar judul bab tetap lurus ---
+% \newlength\mylen
+% % Hitung lebar berdasarkan entri terpanjang yang mungkin (misal, "BAB VIII")
+% \settowidth\mylen{\bfseries BAB VIII} % \quad menambah sedikit spasi
+% \cftsetindents{chap}{0em}{\mylen}
 
 % Mengatur font section
 \usepackage{sectsty}
@@ -216,6 +252,14 @@ bottom=3cm,
 
 %paket untuk mengembed kode dalam LaTeX
 \usepackage{listings}
+\renewcommand{\lstlistingname}{Kode}
+
+\captionsetup[lstlisting]{
+    labelformat=simple, % Menghilangkan format default yang rumit
+    labelsep=space,     % Mengganti titik dua (:) dengan spasi
+    format=hang         % Opsi styling agar rapi
+}
+\makeatletter
 \lstset{
 basicstyle=\fontfamily{pcr}\selectfont\small,
 columns=fullflexible,
@@ -245,7 +289,7 @@ frame=single,
     backgroundcolor=\color{white},   % choose the background color
     basicstyle=\fontfamily{pcr}\selectfont\footnotesize, 
     breaklines=true,                 % automatic line breaking only at whitespace
-    captionpos=b,                    % sets the caption-position to bottom
+    captionpos=t,                    % sets the caption-position to bottom
     commentstyle=\color{mygreen},    % comment style
     keywordstyle=\color{blue},       % keyword style
     stringstyle=\color{mymauve},     % string literal style

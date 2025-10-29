@@ -2,7 +2,7 @@
 % Daftar Isi
 \clearpage
 \phantomsection
-\addcontentsline{toc}{chapter}{DAFTAR ISI}
+% \addcontentsline{toc}{chapter}{DAFTAR ISI}
 %\renewcommand{\cftdotsep}{\cftnodots}
 \setlength{\cftbeforetoctitleskip}{-0.5cm}
 \renewcommand{\cfttoctitlefont}{\hfill\large\bfseries}
@@ -24,14 +24,17 @@
 \renewcommand\listfigurename{DAFTAR GAMBAR}
 \listoffigures
 
-% Daftar Tabel
 \clearpage
 \phantomsection
 \addcontentsline{toc}{chapter}{DAFTAR TABEL}
-\setlength{\cftbeforeloftitleskip}{-0.5cm}
-\renewcommand{\cftloftitlefont}{\hfill\large\bfseries}
-\renewcommand{\cftafterloftitle}{\hfill}
-\renewcommand{\cfttableader}{\dotfill}
-\renewcommand\listtablename{\centerline {\large\bfseries  DAFTAR TABEL}}
+\setlength{\cftbeforelottitleskip}{-0.5cm} % Menggunakan 'lot' untuk List of Tables
+\renewcommand\listtablename{DAFTAR TABEL}
 \listoftables
+
+% Daftar Kode
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{DAFTAR KODE}
+\renewcommand\lstlistlistingname{\centerline{\large\bfseries DAFTAR KODE}}
+\lstlistoflistings
 %% DILARANG EDIT BAGIAN INI
