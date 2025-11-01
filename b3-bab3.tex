@@ -6,7 +6,7 @@
 \chapter[ANALISIS MASALAH]{\\ ANALISIS MASALAH}
 
 \section{Analisis Kondisi Saat Ini}
-Dalam pembangunan sistem pakar, terdapat beberapa tahapan yang akan dilakukan untuk memastikan bahwa hasil akhir dari sistem yang dikembangkan akurat dan dapat digunakan oleh pengguna. Namun, tentu di setiap tahapan akan terdapat permasalahan yang mungkin dapat menghambat proses pengerjaaan sistem tersebut. Oleh karena itu, akan ditentukan beberapa masalah yang mungkin dihadapi berdasarkan tahapan pembangunan dari KBS, yakni identifikasi, konseptualisasi, formalisasi, implementasi, dan juga pengujian (Barrett, 1989).
+Dalam pembangunan sistem pakar, terdapat beberapa tahapan yang akan dilakukan untuk memastikan bahwa hasil akhir dari sistem yang dikembangkan akurat dan dapat digunakan oleh pengguna. Namun, tentu di setiap tahapan akan terdapat permasalahan yang mungkin dapat menghambat proses pengerjaaan sistem tersebut. Oleh karena itu, akan ditentukan beberapa masalah yang mungkin dihadapi berdasarkan tahapan pembangunan dari KBS, yakni identifikasi, konseptualisasi, formalisasi, implementasi, dan juga pengujian \parencite{Barrett1992}.
 \begin{enumerate}
     \item Identifikasi – Penentuan pakar yang sesuai.
     \begin{itemize}
@@ -40,22 +40,212 @@ Dalam pembangunan sistem pakar, terdapat beberapa tahapan yang akan dilakukan un
 \end{enumerate}
 
 \section{Analisis Kebutuhan}
-Berdasarkan analisis masalah di atas, dapat disimpulkan bahwa \textit{knowledge – based system} dengan menggunakan \textit{knowledge graph} sebagai representasi pengetahuan memerlukan: (To Be Continued)
+Berdasarkan analisis masalah di atas, dapat disimpulkan bahwa \emph{knowledge-based system} dengan menggunakan \emph{knowledge graph} sebagai representasi pengetahuan memerlukan serangkaian kebutuhan yang terdefinisi dengan baik agar dapat mengatasi tantangan yang ada dan memberikan solusi yang efektif. Kebutuhan ini dapat diklasifikasikan menjadi identifikasi masalah pengguna, kebutuhan fungsional, dan kebutuhan non-fungsional.
 
 \subsection{Identifikasi Masalah Pengguna}
-(To Be Continued)
+Sistem ini akan memiliki dua kelompok pengguna utama, antara lain adalah pasien (pengguna umum) dan dokter spesialis (pakar).
+\begin{enumerate}
+    \item Pasien / pengguna umum
+    \begin{itemize}
+        \item Kesulitan mendapatkan informasi awal yang terpercaya mengenai gejala penyakit paru-paru yang mereka alami.
+        \item Merasa cemas dan tidak tahu kapan harus mengambil tindakan untuk berkonsultasi dengan dokter.
+        \item Membutuhkan penjelasan yang mudah dipahami tentang kemungkinan penyakit berdasarkan gejala yang dirasakan.
+    \end{itemize}
+    \item Dokter spesialis / pakar
+    \begin{itemize}
+        \item Membutuhkan alat bantu untuk mempercepat proses diagnosis awal, terutama untuk kasus-kasus umum.
+        \item Menghadapi tantangan dalam mengelola dan menghubungkan pengetahuan medis yang kompleks dan terus berkembang (misalnya, hubungan antara gejala, faktor risiko, dan penyakit).
+        \item Membutuhkan \textit{platform} untuk memvalidasi dan memperbarui basis pengetahuan secara sistematis dan fleksibel.
+    \end{itemize}
+\end{enumerate}
 
 \subsection{Kebutuhan Fungsional}
-(To Be Continued)
+Kebutuhan fungsional akan mendefinisikan fitur – fitur spesifik yang harus dimiliki oleh sistem sebagai solusi dari setiap peluang masalah yang sudah didefinisikan di bagian sebelumnya, antara lain:
+\begin{enumerate}
+    \item Sistem memerlukan seorang \textit{knowledge engineer} untuk dapat mengelola pengetahuan yang didapat dari pakar.
+        \begin{itemize}
+            \item Dengan adanya \textit{knowledge engineer}, hubungan antara pakar dengan sistem dapat terfailitasi dengan baik. 
+        \end{itemize}
+    \item Sistem harus mampu merepresentasikan pengetahuan dengan tingkat detail dan granularitas yang tinggi.
+        \begin{itemize}
+            \item Sistem harus dapat menerima \textit{input} berupa nama gejala penyakit secara spesifik, misalnya sistem harus memiliki \textit{node} untuk gejala "batuk", "batuk kering", "batuk berdahak", dan sebagainya, bukan hanya satu \textit{node} umum untuk batuk.
+            \item Hal ini bertujuan untuk menghindari generalisasi berlebih dari suatu gejala penyakit yang dapat menyebabkan kesalahan / ketidakakuratan dalam diagnosis.
+        \end{itemize}
+    \item Sistem harus memiliki mekanisme validasi \textit{input} dan pembatasan konteks.
+        \begin{itemize}
+            \item Sistem harus memiliki aturan validasi untuk \textit{input} pengguna, misalnya menolak \textit{input} yang salah atau tidak logis (misal sistem dapat memberikan peringatan jika ada data umur pasien yang tidak logis, misal berusia 200 tahun).
+            \item Sistem juga dapat memberikan pemberitahuan jika tidak memiliki pengetahuan nama penyakit berdasarkan gejala - gejala yang sudah diberikan.
+        \end{itemize}
+\end{enumerate}
 
 \subsection{Kebutuhan Non – Fungsional}
-(To Be Continued)
+Kebutuhan non-fungsional mendefinisikan standar kualitas dan performa sistem untuk memastikan solusi yang dibangun tidak hanya berfungsi, tetapi juga efisien dan andal.
+
+\begin{enumerate}
+    \item Kinerja dan Skalabilitas (\textit{Scalability}).
+        \begin{itemize}
+            \item Waktu respons sistem untuk melakukan \emph{query} diagnosis harus di bawah 3 detik, bahkan ketika basis pengetahuan sudah besar.
+            \item Arsitektur sistem harus dirancang untuk dapat menangani pertumbuhan \emph{knowledge graph} hingga ratusan \textit{node} dan relasi tanpa penurunan kinerja yang signifikan.
+        \end{itemize}
+    \item Pemeliharaan (\emph{Maintainability}).
+        \begin{itemize}
+            \item Desain basis pengetahuan (skema graf) harus fleksibel dan modular, memungkinkan penambahan tipe entitas atau relasi baru di masa depan tanpa harus merombak keseluruhan sistem.
+        \end{itemize}
+    \item Keandalan (\emph{Reliability}).
+        \begin{itemize}
+            \item Sistem harus memberikan hasil diagnosis yang konsisten untuk \textit{input} gejala yang sama. 
+            \item Setiap perubahan pada basis pengetahuan harus melalui proses validasi oleh pakar untuk memastikan akurasi tetap terjaga.
+        \end{itemize}
+    \item Kemudahan Penggunaan (\emph{Usability}).
+        \begin{itemize}
+            \item Antarmuka untuk pengguna awam harus intuitif dan menggunakan bahasa non-teknis.
+            \item Antarmuka untuk pakar harus efisien dan mempermudah proses pengelolaan pengetahuan yang kompleks.
+        \end{itemize}
+\end{enumerate}
 
 \section{Analisis Pemilihan Solusi}
-(To Be Continued)
+Karena penggunaan graf pengetahuan (\textit{knowledge graph}) telah ditetapkan sebagai metode representasi utama, analisis ini berfokus pada pemilihan strategi akuisisi pengetahuan dan konstruksi \textit{knowledge graph} yang paling optimal. Pemilihan strategi akan menentukan kualitas, akurasi, dan kelayakan implementasi sistem. Untuk itu, akan dilakukan evaluasi terhadap tiga alternatif strategi menggunakan metode \textit{Analytic Hierarchy Process} (AHP).
 
 \subsection{Alternatif Solusi}
-(To Be Continued)
+Terdapat tiga alternatif utama untuk strategi akuisisi pengetahuan dalam konteks tugas akhir ini:
+
+\begin{enumerate}
+    \item Akuisisi manual berbasis pakar (\emph{Expert-Driven}):
+        \begin{itemize}
+            \item Pendekatan ini mengandalkan interaksi langsung dengan pakar domain (dokter spesialis) untuk mengekstraksi, memformalkan, dan memvalidasi pengetahuan. 
+            \item  Proses melibatkan wawancara terstruktur, studi literatur yang direkomendasikan pakar, dan pemodelan manual setiap entitas dan relasi ke dalam \textit{knowledge graph}.
+            \item Keunggulan utamanya adalah akurasi dan kualitas pengetahuan yang sangat tinggi, namun kelemahannya adalah proses yang lambat dan tidak skalabel.
+        \end{itemize}
+
+    \item Akuisisi otomatis berbasis teks (NLP-\textit{Driven}):
+        \begin{itemize}
+            \item Pendekatan ini memanfaatkan teknik \emph{Natural Language Processing} (NLP) untuk secara otomatis mengekstrak entitas dan relasi dari teks yang besar (misalnya, artikel jurnal medis). 
+            \item Tujuannya adalah membangun \textit{knowledge graph} dalam skala besar dengan intervensi manusia minimal. 
+            \item Keunggulannya adalah skalabilitas dan efisiensi, namun sangat rentan menghasilkan informasi yang salah (\emph{noise}) dan memiliki kompleksitas implementasi yang sangat tinggi.
+        \end{itemize}
+        
+    \item Pendekatan hibrida (otomatis dengan validasi pakar):
+        \begin{itemize}
+            \item Strategi ini menggabungkan kedua pendekatan sebelumnya. Sebuah \textit{pipeline} NLP digunakan untuk mengekstrak pengetahuan secara otomatis, yang kemudian disajikan kepada pakar untuk divalidasi (disetujui, ditolak, atau diubah) sebelum dimasukkan ke dalam \textit{knowledge graph} final.
+            \item Pendekatan ini menyeimbangkan antara kualitas dan skala, namun memiliki kompleksitas implementasi tertinggi karena memerlukan pengembangan sistem ekstraksi otomatis dan antarmuka validasi.
+        \end{itemize}
+\end{enumerate}
 
 \subsection{Analisis Penentuan Solusi}
-(To Be Continued)
+Analisis dilakukan melalui tiga langkah utama AHP, antara lain adalah penyusunan hierarki, perbandingan berpasangan untuk menghitung bobot, dan sintesis hasil.
+
+\begin{enumerate}
+    \item Penyusunan hierarki \\
+    Hierarki keputusan terdiri dari tujuan (memilih strategi akuisisi), empat kriteria utama, dan tiga alternatif yang sudah disebutkan. Kriteria yang digunakan adalah:
+        \begin{itemize}
+        \item K1: Kualitas \& akurasi pengetahuan \\
+        Seberapa valid dan andal pengetahuan yang dihasilkan.
+        \item K2: Kelayakan implementasi (\textit{feasibility}) untuk TA \\
+        Seberapa realistis strategi ini untuk diselesaikan dalam batasan waktu dan sumber daya tugas akhir.
+        \item K3: Skalabilitas dan cakupan pengetahuan \\
+        Kemampuan strategi untuk membangun \textit{knowledge graph} yang luas dan mudah diperluas.
+        \item K4: Efisiensi keterlibatan pakar \\
+        Seberapa efisien waktu pakar dimanfaatkan.
+        \end{itemize}
+        
+    \item Perbandingan \& perhitungan bobot \\
+        Pada tahap ini, penilaian kualitatif diubah menjadi angka menggunakan Skala Saaty (1-9).
+        \begin{enumerate}
+            \item Penentuan bobot prioritas kriteria \\
+                Kriteria-kriteria di atas dibandingkan satu sama lain untuk menentukan tingkat kepentingannya.
+                \begin{itemize}
+                    \item Justifikasi penilaian:
+                    \begin{itemize}
+                        \item K1 vs K2 (Akurasi vs Kelayakan): Akurasi dinilai sedikit lebih penting (nilai 3) daripada Kelayakan. Sebuah sistem yang layak dibuat namun tidak akurat tidak memiliki nilai guna.
+                        \item K1 vs K3 (Akurasi vs Skalabilitas): Akurasi dinilai cukup lebih penting (nilai 5) daripada Skalabilitas. Lebih baik memiliki \textit{knowledge graph} kecil yang akurat daripada \textit{knowledge graph} besar yang penuh kesalahan.
+                        \item K1 vs K4 (Akurasi vs Efisiensi Pakar): Akurasi dinilai sangat lebih penting (nilai 7) daripada Efisiensi waktu pakar. Kualitas hasil akhir adalah prioritas utama.
+                        \item K2 vs K3 (Kelayakan vs Skalabilitas): Kelayakan TA dinilai sedikit lebih penting (nilai 3) daripada Skalabilitas. Proyek harus dapat diselesaikan terlebih dahulu sebelum memikirkan skala besar.
+                    \end{itemize}
+                \end{itemize} 
+                Penilaian kualitatif ini menghasilkan matriks pada Tabel \ref{tab:matriks-kriteria} dan bobot prioritas yang dihitung darinya.
+
+                \begin{table}[h!]
+                \centering
+                \caption{Matriks Perbandingan Berpasangan dan Bobot Prioritas Kriteria}
+                \label{tab:matriks-kriteria}
+                \begin{tabular}{|l|c|c|c|c||c|}
+                \hline
+                Kriteria & K1 & K2 & K3 & K4 & Bobot Prioritas \\ \hline
+                K1: Akurasi         & 1   & 3   & 5   & 7   & 0.55 \\ \hline
+                K2: Kelayakan TA    & 1/3 & 1   & 3   & 5   & 0.26 \\ \hline
+                K3: Skalabilitas    & 1/5 & 1/3 & 1   & 3   & 0.13 \\ \hline
+                K4: Efisiensi Pakar & 1/7 & 1/5 & 1/3 & 1   & 0.06 \\ \hline
+                \end{tabular}
+                \end{table}
+                
+            \item Evaluasi alternatif terhadap setiap kriteria \\
+            Sekarang, setiap alternatif dievaluasi untuk masing-masing kriteria.
+            \begin{itemize}
+                \item Terhadap K1: Akurasi Pengetahuan
+                    \begin{itemize}
+                        \item Justifikasi: Manual paling akurat (diawasi 100\% oleh pakar). Hibrida di urutan kedua (ada validasi). Otomatis paling tidak akurat (risiko \emph{noise}). Manual dinilai sangat lebih akurat (7) dari Otomatis dan sedikit lebih akurat (3) dari Hibrida.
+                        \item Hasil Bobot: Manual (0.63), Hibrida (0.27), Otomatis (0.10).
+                    \end{itemize}
+                \item Terhadap K2: Kelayakan Implementasi TA
+                    \begin{itemize}
+                        \item Justifikasi: Manual paling layak (risiko teknis rendah). Otomatis dan Hibrida sangat tidak layak karena memerlukan keahlian NLP mendalam yang berada di luar lingkup. Manual dinilai mutlak lebih layak (9) dari Otomatis dan sangat lebih layak (7) dari Hibrida.
+                        \item Hasil Bobot: Manual (0.70), Hibrida (0.20), Otomatis (0.10).
+                    \end{itemize}
+                \item Terhadap K3: Skalabilitas
+                    \begin{itemize}
+                        \item Justifikasi: Otomatis paling skalabel (memproses ribuan dokumen). Hibrida di urutan kedua. Manual sangat tidak skalabel. Otomatis dinilai sangat lebih skalabel (7) dari Manual.
+                        \item Hasil Bobot: Otomatis (0.65), Hibrida (0.25), Manual (0.10).
+                    \end{itemize}
+                \item Terhadap K4: Efisiensi Keterlibatan Pakar
+                    \begin{itemize}
+                        \item Justifikasi: Otomatis paling efisien (intervensi pakar minimal). Hibrida membutuhkan waktu untuk validasi. Manual paling boros waktu pakar. Otomatis dinilai sangat lebih efisien (7) dari Manual.
+                        \item Hasil Bobot: Otomatis (0.62), Hibrida (0.27), Manual (0.11).
+                    \end{itemize}
+                \end{itemize}
+            \end{enumerate}
+
+    \item Sintesis \& keputusan akhir
+        Bobot dari kriteria dan alternatif digabungkan untuk mendapatkan skor akhir.
+        \begin{enumerate}
+            \item Ringkasan bobot prioritas \\
+                Tabel \ref{tab:bobot-ringkasan} merangkum semua bobot yang telah dihitung.
+                
+                    \begin{table}[h!]
+                    \centering
+                    \caption{Ringkasan Bobot Prioritas dari AHP}
+                    \label{tab:bobot-ringkasan}
+                    \begin{tabular}{|l|c|c|c|c|}
+                    \hline
+                    Alternatif & vs K1: Akurasi & vs K2: Kelayakan & vs K3: Skalabilitas & vs K4: Efisiensi \\
+                    & (Bobot=0.55) & (Bobot=0.26) & (Bobot=0.13) & (Bobot=0.06) \\ \hline
+                    A1: Manual & 0.63 & 0.70 & 0.10 & 0.11 \\ \hline
+                    A2: Otomatis & 0.10 & 0.10 & 0.65 & 0.62 \\ \hline
+                    A3: Hibrida & 0.27 & 0.20 & 0.25 & 0.27 \\ \hline
+                    \end{tabular}
+                    \end{table}
+            \item Perhitungan skor akhir \\
+            Skor akhir setiap alternatif dihitung dengan mengalikan bobot pada setiap kolom dengan bobot kriteria di atasnya.
+            \begin{itemize}
+                \item Skor Akuisisi Manual: \\ $(0.55 \times 0.63) + (0.26 \times 0.70) + (0.13 \times 0.10) + (0.06 \times 0.11) = 0.347 + 0.182 + 0.013 + 0.007 = \mathbf{0.549}$
+                \item Skor Akuisisi Otomatis: \\ $(0.55 \times 0.10) + (0.26 \times 0.10) + (0.13 \times 0.65) + (0.06 \times 0.62) = 0.055 + 0.026 + 0.085 + 0.037 = \mathbf{0.203}$
+                \item Skor Pendekatan Hibrida: \\ $(0.55 \times 0.27) + (0.26 \times 0.20) + (0.13 \times 0.25) + (0.06 \times 0.27) = 0.149 + 0.052 + 0.033 + 0.016 = \mathbf{0.250}$
+            \end{itemize}
+            \item Keputusan akhir \\
+              Hasil perhitungan AHP menunjukkan peringkat dari setiap alternatif, antara lain sebagai berikut:
+              
+            \begin{table}[H]
+            \centering
+            \caption{Hasil Akhir Peringkat Alternatif Strategi Akuisisi}
+            \label{tab:ahp-hasil-akuisisi}
+            \begin{tabular}{|l|c|c|}
+            \hline
+            Alternatif Strategi Akuisisi & Skor Akhir & Peringkat \\ \hline
+            \textbf{Akuisisi Manual Berbasis Pakar} & \textbf{0.549} & \textbf{1} \\ \hline
+            Pendekatan Hibrida & 0.250 & 2 \\ \hline
+            Akuisisi Otomatis Berbasis Teks & 0.203 & 3 \\ \hline
+            \end{tabular}
+            \end{table}
+
+            Berdasarkan analisis AHP yang komprehensif, Strategi akuisisi manual berbasis pakar terpilih sebagai pendekatan yang paling optimal untuk tugas akhir ini. Keputusan ini didasarkan pada skornya yang paling tinggi dibandingkan dengan alternatif solusi lain, di mana berasal dari keunggulannya pada dua kriteria dengan bobot tertinggi, yakni akurasi pengetahuan medis dan kelayakan implementasi. Dalam konteks tugas akhir, kualitas dan mitigasi risiko proyek lebih diutamakan daripada skalabilitas. Oleh karena itu, strategi pengembangan akan berfokus pada kolaborasi intensif dengan pakar untuk membangun sebuah \textit{knowledge graph} yang valid dan dapat dipertanggung jawabkan.
+        \end{enumerate}
+\end{enumerate}
