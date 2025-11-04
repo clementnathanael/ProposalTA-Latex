@@ -66,10 +66,14 @@ Kebutuhan fungsional akan mendefinisikan fitur – fitur spesifik yang harus dim
         \begin{itemize}
             \item Dengan adanya \textit{knowledge engineer}, hubungan antara pakar dengan sistem dapat terfailitasi dengan baik. 
         \end{itemize}
-    \item Sistem harus mampu merepresentasikan pengetahuan dengan tingkat detail dan granularitas yang tinggi.
+    \item Sistem dapat menerima \textit{input} berupa gejala dari pasien.
         \begin{itemize}
             \item Sistem harus dapat menerima \textit{input} berupa nama gejala penyakit secara spesifik, misalnya sistem harus memiliki \textit{node} untuk gejala "batuk", "batuk kering", "batuk berdahak", dan sebagainya, bukan hanya satu \textit{node} umum untuk batuk.
             \item Hal ini bertujuan untuk menghindari generalisasi berlebih dari suatu gejala penyakit yang dapat menyebabkan kesalahan / ketidakakuratan dalam diagnosis.
+        \end{itemize}
+    \item Sistem dapat mengeluarkan \textit{output} berupa diagnosis penyakit berdasarkan gejala yang dimasukkan pasien.
+        \begin{itemize}
+            \item Sistem harus dapat mengeluarkan \textit{output} berupa diagnosis penyakit berdasarkan analisis gejala yang dimasukkan pasien melalui \textit{knowledge graph}.
         \end{itemize}
     \item Sistem harus memiliki mekanisme validasi \textit{input} dan pembatasan konteks.
         \begin{itemize}
@@ -85,7 +89,7 @@ Kebutuhan non-fungsional mendefinisikan standar kualitas dan performa sistem unt
     \item Kinerja dan Skalabilitas (\textit{Scalability}).
         \begin{itemize}
             \item Waktu respons sistem untuk melakukan \emph{query} diagnosis harus di bawah 3 detik, bahkan ketika basis pengetahuan sudah besar.
-            \item Arsitektur sistem harus dirancang untuk dapat menangani pertumbuhan \emph{knowledge graph} hingga ratusan \textit{node} dan relasi tanpa penurunan kinerja yang signifikan.
+            \item Arsitektur sistem harus dirancang untuk dapat menangani pertumbuhan \emph{knowledge graph} hingga ratusan \textit{node} dan relasi tanpa penurunan kinerja yang signifikan, yang dapat diukur dengan menggunakan kompleksitas ruang dan waktu dari \textit{knowledge graph} tersebut.
         \end{itemize}
     \item Pemeliharaan (\emph{Maintainability}).
         \begin{itemize}
@@ -96,11 +100,11 @@ Kebutuhan non-fungsional mendefinisikan standar kualitas dan performa sistem unt
             \item Sistem harus memberikan hasil diagnosis yang konsisten untuk \textit{input} gejala yang sama. 
             \item Setiap perubahan pada basis pengetahuan harus melalui proses validasi oleh pakar untuk memastikan akurasi tetap terjaga.
         \end{itemize}
-    \item Kemudahan Penggunaan (\emph{Usability}).
-        \begin{itemize}
-            \item Antarmuka untuk pengguna awam harus intuitif dan menggunakan bahasa non-teknis.
-            \item Antarmuka untuk pakar harus efisien dan mempermudah proses pengelolaan pengetahuan yang kompleks.
-        \end{itemize}
+    % \item Kemudahan Penggunaan (\emph{Usability}).
+    %     \begin{itemize}
+    %         \item Antarmuka untuk pengguna awam harus intuitif dan menggunakan bahasa non-teknis.
+    %         \item Antarmuka untuk pakar harus efisien dan mempermudah proses pengelolaan pengetahuan yang kompleks.
+    %     \end{itemize}
 \end{enumerate}
 
 \section{Analisis Pemilihan Solusi}
@@ -110,21 +114,21 @@ Karena penggunaan graf pengetahuan (\textit{knowledge graph}) telah ditetapkan s
 Terdapat tiga alternatif utama untuk strategi akuisisi pengetahuan dalam konteks tugas akhir ini:
 
 \begin{enumerate}
-    \item Akuisisi manual berbasis pakar (\emph{Expert-Driven}):
+    \item Akuisisi manual berbasis pakar (\emph{Expert – Driven}):
         \begin{itemize}
             \item Pendekatan ini mengandalkan interaksi langsung dengan pakar domain (dokter spesialis) untuk mengekstraksi, memformalkan, dan memvalidasi pengetahuan. 
             \item  Proses melibatkan wawancara terstruktur, studi literatur yang direkomendasikan pakar, dan pemodelan manual setiap entitas dan relasi ke dalam \textit{knowledge graph}.
             \item Keunggulan utamanya adalah akurasi dan kualitas pengetahuan yang sangat tinggi, namun kelemahannya adalah proses yang lambat dan tidak skalabel.
         \end{itemize}
 
-    \item Akuisisi otomatis berbasis teks (NLP-\textit{Driven}):
+    \item Akuisisi otomatis berbasis teks (NLP – \textit{Driven}):
         \begin{itemize}
             \item Pendekatan ini memanfaatkan teknik \emph{Natural Language Processing} (NLP) untuk secara otomatis mengekstrak entitas dan relasi dari teks yang besar (misalnya, artikel jurnal medis). 
             \item Tujuannya adalah membangun \textit{knowledge graph} dalam skala besar dengan intervensi manusia minimal. 
             \item Keunggulannya adalah skalabilitas dan efisiensi, namun sangat rentan menghasilkan informasi yang salah (\emph{noise}) dan memiliki kompleksitas implementasi yang sangat tinggi.
         \end{itemize}
         
-    \item Pendekatan hibrida (otomatis dengan validasi pakar):
+    \item Pendekatan \textit{hybrid} (otomatis dengan validasi pakar):
         \begin{itemize}
             \item Strategi ini menggabungkan kedua pendekatan sebelumnya. Sebuah \textit{pipeline} NLP digunakan untuk mengekstrak pengetahuan secara otomatis, yang kemudian disajikan kepada pakar untuk divalidasi (disetujui, ditolak, atau diubah) sebelum dimasukkan ke dalam \textit{knowledge graph} final.
             \item Pendekatan ini menyeimbangkan antara kualitas dan skala, namun memiliki kompleksitas implementasi tertinggi karena memerlukan pengembangan sistem ekstraksi otomatis dan antarmuka validasi.
@@ -156,17 +160,17 @@ Analisis dilakukan melalui tiga langkah utama AHP, antara lain adalah penyusunan
                 \begin{itemize}
                     \item Justifikasi penilaian:
                     \begin{itemize}
-                        \item K1 vs K2 (Akurasi vs Kelayakan): Akurasi dinilai sedikit lebih penting (nilai 3) daripada Kelayakan. Sebuah sistem yang layak dibuat namun tidak akurat tidak memiliki nilai guna.
-                        \item K1 vs K3 (Akurasi vs Skalabilitas): Akurasi dinilai cukup lebih penting (nilai 5) daripada Skalabilitas. Lebih baik memiliki \textit{knowledge graph} kecil yang akurat daripada \textit{knowledge graph} besar yang penuh kesalahan.
-                        \item K1 vs K4 (Akurasi vs Efisiensi Pakar): Akurasi dinilai sangat lebih penting (nilai 7) daripada Efisiensi waktu pakar. Kualitas hasil akhir adalah prioritas utama.
-                        \item K2 vs K3 (Kelayakan vs Skalabilitas): Kelayakan TA dinilai sedikit lebih penting (nilai 3) daripada Skalabilitas. Proyek harus dapat diselesaikan terlebih dahulu sebelum memikirkan skala besar.
+                        \item K1 vs K2 (akurasi vs kelayakan): Akurasi dinilai lebih penting (nilai 3) daripada Kelayakan. Sebuah sistem yang layak dibuat namun tidak akurat tidak memiliki nilai guna.
+                        \item K1 vs K3 (akurasi vs skalabilitas): Akurasi dinilai cukup lebih penting (nilai 5) daripada skalabilitas. Lebih baik memiliki \textit{knowledge graph} kecil yang akurat daripada \textit{knowledge graph} besar yang tidak akurat.
+                        \item K1 vs K4 (akurasi vs efisiensi pakar): Akurasi dinilai sangat lebih penting (nilai 7) daripada efisiensi waktu pakar. Kualitas hasil akhir adalah prioritas utama.
+                        \item K2 vs K3 (kelayakan vs skalabilitas): Kelayakan (\textit{feasbility}) untuk tugas akhir dinilai lebih penting (nilai 3) daripada skalabilitas. Proyek harus dapat diselesaikan terlebih dahulu sebelum memikirkan skalabilitas.
                     \end{itemize}
                 \end{itemize} 
                 Penilaian kualitatif ini menghasilkan matriks pada Tabel \ref{tab:matriks-kriteria} dan bobot prioritas yang dihitung darinya.
 
                 \begin{table}[h!]
                 \centering
-                \caption{Matriks Perbandingan Berpasangan dan Bobot Prioritas Kriteria}
+                \caption{Matriks perbandingan berpasangan dan bobot prioritas kriteria}
                 \label{tab:matriks-kriteria}
                 \begin{tabular}{|l|c|c|c|c||c|}
                 \hline
@@ -181,25 +185,25 @@ Analisis dilakukan melalui tiga langkah utama AHP, antara lain adalah penyusunan
             \item Evaluasi alternatif terhadap setiap kriteria \\
             Sekarang, setiap alternatif dievaluasi untuk masing-masing kriteria.
             \begin{itemize}
-                \item Terhadap K1: Akurasi Pengetahuan
+                \item Terhadap K1: Akurasi pengetahuan
                     \begin{itemize}
-                        \item Justifikasi: Manual paling akurat (diawasi 100\% oleh pakar). Hibrida di urutan kedua (ada validasi). Otomatis paling tidak akurat (risiko \emph{noise}). Manual dinilai sangat lebih akurat (7) dari Otomatis dan sedikit lebih akurat (3) dari Hibrida.
-                        \item Hasil Bobot: Manual (0.63), Hibrida (0.27), Otomatis (0.10).
+                        \item Justifikasi: Manual paling akurat (diawasi 100\% oleh pakar). \textit{Hybrid} di urutan kedua (ada validasi). Otomatis paling tidak akurat (risiko \emph{noise}). Manual dinilai lebih akurat (7) dari otomatis dan sedikit lebih akurat (3) dari \textit{Hybrid}.
+                        \item Hasil Bobot: Manual (0.63), \textit{Hybrid} (0.27), Otomatis (0.10).
                     \end{itemize}
-                \item Terhadap K2: Kelayakan Implementasi TA
+                \item Terhadap K2: Kelayakan implementasi Tugas Akhir
                     \begin{itemize}
-                        \item Justifikasi: Manual paling layak (risiko teknis rendah). Otomatis dan Hibrida sangat tidak layak karena memerlukan keahlian NLP mendalam yang berada di luar lingkup. Manual dinilai mutlak lebih layak (9) dari Otomatis dan sangat lebih layak (7) dari Hibrida.
-                        \item Hasil Bobot: Manual (0.70), Hibrida (0.20), Otomatis (0.10).
+                        \item Justifikasi: Manual paling layak (risiko teknis rendah). Otomatis dan \textit{Hybrid} tidak begitu \textit{feasible} karena memerlukan keahlian NLP yang berada di luar lingkup Tugas Akhir ini. Manual dinilai mutlak lebih layak (9) dari otomatis dan sangat lebih layak (7) dari \textit{Hybrid}.
+                        \item Hasil Bobot: Manual (0.70), \textit{Hybrid} (0.20), Otomatis (0.10).
                     \end{itemize}
                 \item Terhadap K3: Skalabilitas
                     \begin{itemize}
-                        \item Justifikasi: Otomatis paling skalabel (memproses ribuan dokumen). Hibrida di urutan kedua. Manual sangat tidak skalabel. Otomatis dinilai sangat lebih skalabel (7) dari Manual.
-                        \item Hasil Bobot: Otomatis (0.65), Hibrida (0.25), Manual (0.10).
+                        \item Justifikasi: Otomatis paling skalabel (memproses ribuan dokumen). \textit{Hybrid} di urutan kedua. Manual sangat tidak skalabel. Otomatis dinilai sangat lebih skalabel (7) dari Manual.
+                        \item Hasil Bobot: Otomatis (0.65), \textit{Hybrid} (0.25), Manual (0.10).
                     \end{itemize}
-                \item Terhadap K4: Efisiensi Keterlibatan Pakar
+                \item Terhadap K4: Efisiensi keterlibatan pakar
                     \begin{itemize}
-                        \item Justifikasi: Otomatis paling efisien (intervensi pakar minimal). Hibrida membutuhkan waktu untuk validasi. Manual paling boros waktu pakar. Otomatis dinilai sangat lebih efisien (7) dari Manual.
-                        \item Hasil Bobot: Otomatis (0.62), Hibrida (0.27), Manual (0.11).
+                        \item Justifikasi: Otomatis paling efisien (intervensi pakar minimal). \textit{Hybrid} membutuhkan waktu untuk validasi. Manual paling boros karena membutuhkan waktu lama dari  pakar. Otomatis dinilai sangat lebih efisien (7) dari manual.
+                        \item Hasil Bobot: Otomatis (0.62), \textit{Hybrid} (0.27), Manual (0.11).
                     \end{itemize}
                 \end{itemize}
             \end{enumerate}
@@ -220,7 +224,7 @@ Analisis dilakukan melalui tiga langkah utama AHP, antara lain adalah penyusunan
                     & (Bobot=0.55) & (Bobot=0.26) & (Bobot=0.13) & (Bobot=0.06) \\ \hline
                     A1: Manual & 0.63 & 0.70 & 0.10 & 0.11 \\ \hline
                     A2: Otomatis & 0.10 & 0.10 & 0.65 & 0.62 \\ \hline
-                    A3: Hibrida & 0.27 & 0.20 & 0.25 & 0.27 \\ \hline
+                    A3: \textit{Hybrid} & 0.27 & 0.20 & 0.25 & 0.27 \\ \hline
                     \end{tabular}
                     \end{table}
             \item Perhitungan skor akhir \\
@@ -228,7 +232,7 @@ Analisis dilakukan melalui tiga langkah utama AHP, antara lain adalah penyusunan
             \begin{itemize}
                 \item Skor Akuisisi Manual: \\ $(0.55 \times 0.63) + (0.26 \times 0.70) + (0.13 \times 0.10) + (0.06 \times 0.11) = 0.347 + 0.182 + 0.013 + 0.007 = \mathbf{0.549}$
                 \item Skor Akuisisi Otomatis: \\ $(0.55 \times 0.10) + (0.26 \times 0.10) + (0.13 \times 0.65) + (0.06 \times 0.62) = 0.055 + 0.026 + 0.085 + 0.037 = \mathbf{0.203}$
-                \item Skor Pendekatan Hibrida: \\ $(0.55 \times 0.27) + (0.26 \times 0.20) + (0.13 \times 0.25) + (0.06 \times 0.27) = 0.149 + 0.052 + 0.033 + 0.016 = \mathbf{0.250}$
+                \item Skor Pendekatan \textit{Hybrid}: \\ $(0.55 \times 0.27) + (0.26 \times 0.20) + (0.13 \times 0.25) + (0.06 \times 0.27) = 0.149 + 0.052 + 0.033 + 0.016 = \mathbf{0.250}$
             \end{itemize}
             \item Keputusan akhir \\
               Hasil perhitungan AHP menunjukkan peringkat dari setiap alternatif, antara lain sebagai berikut:
@@ -241,7 +245,7 @@ Analisis dilakukan melalui tiga langkah utama AHP, antara lain adalah penyusunan
             \hline
             Alternatif Strategi Akuisisi & Skor Akhir & Peringkat \\ \hline
             \textbf{Akuisisi Manual Berbasis Pakar} & \textbf{0.549} & \textbf{1} \\ \hline
-            Pendekatan Hibrida & 0.250 & 2 \\ \hline
+            Pendekatan \textit{Hybrid} & 0.250 & 2 \\ \hline
             Akuisisi Otomatis Berbasis Teks & 0.203 & 3 \\ \hline
             \end{tabular}
             \end{table}

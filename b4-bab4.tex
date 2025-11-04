@@ -3,19 +3,111 @@
 % Silahkan edit sesuai kebutuhan, baik menambah atau mengurangi \section, \subsection
 %==================================================================
 
-\chapter[DESAIN DAN RANCANGAN SOLUSI \textit{EXPERT SYSTEM}]{\\ DESAIN DAN RANCANGAN SOLUSI \textit{EXPERT SYSTEM}}
+\chapter[DESAIN DAN RANCANGAN SOLUSI]{\\ DESAIN DAN RANCANGAN SOLUSI}
 
 \section{Tahapan Desain}
-Lorem ipsum
+
+Bab ini akan menguraikan secara rinci mengenai proses desain dan rancangan dari \emph{knowledge-based system} yang akan dibangun. Rancangan ini didasarkan pada analisis kebutuhan dan pemilihan solusi yang telah dibahas pada bab sebelumnya, di mana diputuskan untuk menggunakan \textit{knowledge graph} dengan strategi akuisisi pengetahuan manual berbasis pakar.
 
 \subsection{Tahapan Pertama}
-Lorem ipsum
+
+Pada tahapan pertama ini, untuk membantu memahami proses dari \textit{knowledge – based system} yang akan dibangun, akan didefinisikan diagram alur proses dari KBS ini, antara lain sebagai berikut:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.1]{gambar/flowchart.jpg}
+    \caption{Diagram alur proses dari KBS yang akan dibangun.}
+    \label{fig:kg}
+\end{figure}
+
+Berikut ini merupakan penjelasan dari \textit{flowchart} diatas:
+\begin{enumerate}
+    \item Pasien memasukkan gejala yang dialami.
+        \begin{itemize}
+            \item Pasien berinteraksi dengan program untuk memasukkan data yang dialami. Mereka memilih gejala-gejala yang mereka alami dari daftar yang disediakan.
+        \end{itemize}
+    \item Sistem mengirimkan data gejala ke bagian CSF (\textit{Case – Specific Fact}).
+        \begin{itemize}
+            \item Sistem akan mengumpulkan data gejala yang dipilih dan mengirimkannya ke \textit{knowledge – based system} yang dibangun untuk diproses.
+        \end{itemize}
+    \item Mesin inferensi akan membangun \textit{query cypher} berdasarkan gejala.
+        \begin{itemize}
+            \item Mesin inferensi akan menerima daftar gejala dari komponen CSF dan secara dinamis membuat sebuah perintah \textit{query} dalam bahasa Cypher. \textit{Query} ini dirancang untuk mencari pola yang relevan di dalam \textit{knowledge graph}.
+        \end{itemize}    
+    \item DSKB (\textit{Domain – specific knowledge based}) akan menjalankan \textit{query} dan mencari pola penyakit.
+        \begin{itemize}
+            \item \textit{Query} yang sudah dibuat dikirimkan ke dalam basis data berbentuk \textit{knowledge graph} (Neo4j). Basis data graf tersebut akan mengeksekusi \textit{query} tersebut, menelusuri \textit{node} yang ada dan relasi untuk menemukan semua \textit{node} penyakit yang terhubung dengan \textit{node} gejala yang dimasukkan oleh pengguna. Hasil dari proses ini adalah daftar kandidat penyakit.
+        \end{itemize}
+    \item Mesin inferensi (Komponen Hasil Sementara) akan menerima kandidat penyakit.
+        \begin{itemize}
+            \item Komponen Hasil Sementara akan menerima daftar kandidat penyakit yang dikembalikan oleh DSKB.
+        \end{itemize}   
+     \item Komponen Hasil Sementara akan menghitung skor diagnosis berdasarkan kecocokan gejala.
+        \begin{itemize}
+            \item Untuk setiap kandidat penyakit, Komponen Hasil Sementara akan menjalankan algoritma \textit{scoring}. Skor dihitung berdasarkan faktor-faktor seperti jumlah gejala yang cocok, bobot spesifik dari setiap gejala, dan faktor lain yang akan ditentukan kemudian.
+        \end{itemize}   
+    \item Komponen Hasil Sementara akan mengurutkan hasil penyakit.
+       \begin{itemize}
+            \item Setelah semua kandidat penyakit diberi skor, daftar tersebut diurutkan dari yang memiliki skor tertinggi (paling mungkin) hingga yang terendah.
+        \end{itemize}    
+    \item Sistem akan menampilkan daftar diagnosis.
+        \begin{itemize}
+            \item Hasil akhir yang sudah diurutkan dikirim kembali ke pasien yang akan ditampilkan dalam format yang mudah dibaca, termasuk nama penyakit, persentase keyakinan, dan penjelasan mengapa sistem sampai pada kesimpulan tersebut (misalnya, "Didiagnosis karena gejala X, Y, dan Z cocok").
+        \end{itemize}      
+\end{enumerate}
 
 \subsection{Tahapan Kedua}
-Lorem ipsum
+Pada tahapan kedua ini, akan dirancang arsitektur dari \textit{knowledge – based system}. Berikut ini merupakan komponen arsitektur KBS yang akan dibangun:
+\begin{enumerate}
+    \item Aktor eksternal.
+        \begin{itemize}
+            \item Pasien: Pasien merupakan pengguna akhir sistem yang tidak memiliki pengetahuan medis yang mendalam. Mereka berinteraksi dengan sistem untuk mendapatkan diagnosis awal berdasarkan gejala yang mereka alami. Mereka berinteraksi terutama melalui Komponen Wawancara dan menerima \textit{output} dari Komponen Penjelasan.
+            \item Pakar / dokter spesialis: Ini adalah sumber pengetahuan domain. Berdasarkan strategi akuisisi manual yang dipilih, pakar (bersama dengan \textit{knowledge engineer}) bertanggung jawab untuk membangun, memvalidasi, dan memperbarui \textit{knowledge graph}. Mereka berinteraksi dengan sistem melalui Modul Akuisisi Pengetahuan.
+        \end{itemize}
+    \item Basis pengetahuan (\textit{knowledge bases}).
+        \begin{itemize}
+            \item \textit{Case – specific facts} (CSF):
+                CSF merupakan data temporer dan spesifik untuk setiap sesi konsultasi. Isinya adalah fakta, atau dalam kasus ini merupakan daftar gejala yang dimasukkan oleh seorang pengguna pada satu waktu tertentu. Informasi ini menjadi \textit{input} utama bagi Mesin Inferensi untuk memulai proses diagnosis.
+            \item \textit{Domain – specific knowledge bases} (DSKB):
+                DSKB berupa basis data graf (Neo4j) yang berisi model pengetahuan domain: \textit{node-node} (penyakit, gejala) dan relasi-relasi yang menghubungkannya. Pengetahuan ini bersifat statis selama sesi konsultasi tetapi dapat diperbarui oleh pakar.
+        \end{itemize}
+    \item Mesin inferensi:
+        \begin{itemize}
+            \item Mesin inferensi yang akan dibangun merupakan komponen sentral yang menjalankan proses diagnosis. Fungsi dari mesin inferensi, antara lain:
+                \begin{enumerate}
+                    \item Menerima CSF dari pengguna.
+                    \item Mengonstruksi dan mengirimkan \textit{query cypher} kepada DSKB.
+                    \item Menerima hasil dari \textit{query cypher}.
+                    \item Melakukan \textit{scoring} untuk menentukan diagnosis yang paling mungkin.
+                    \item Menyiapkan solusi masalah (hasil diagnosis) dan "Jalur Penalaran" untuk dikirim ke Komponen Penjelasan.
+                \end{enumerate}
+            \item Komponen Wawancara: Bagian yang berfungsi untuk mendapatkan data / fakta dari pengguna. Komponen ini menyediakan daftar gejala yang akan diisi oleh pengguna untuk memasukkan gejala mereka.
+            \item Komponen Akusisi Pengetahuan: Bagian yang berfungsi untuk memasukkan pengetahuan yang didapat oleh pakar ke dalam \textit{knowledge graph}. Pada tahap ini, \textit{knowledge engineer} akan memasukkan langsung ke basis data Neo4j.
+            \item Komponen Hasil Sementara: Bagian ini akan menerima hasil diagnosis sementara dari DSKB dan akan melakukan perhitungan dan \textit{sorting} untuk menghasilkan diagnosis penyakit mana yang paling mungkin.
+        \end{itemize}
+\end{enumerate}
 
 \subsection{Tahapan Ketiga}
-Lorem ipsum
+Pada tahapan ini, akan dirancang struktur dasar dari \textit{knowledge graph} yang akan dibuat. 
+(To be continued)
 
 \section{Hasil Desain}
-Lorem ipsum
+Berdasarkan hasil perancangan komponen pada tahapan kedua, berikut ini merupakan arsitektur \textit{knowledge – based system} yang akan dibuat:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.1]{gambar/arsitektur kbs new.jpg}
+  \caption{Rancangan hasil arsitektur KBS.}
+  \label{fig:my_label}
+\end{figure}
+
+Hasil desain arsitektur tersebut sedikit berbeda dengan arsitektur \textit{knowledge – based system} pada umumnya, antara lain sebagai berikut:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{gambar/kbs.png}
+    \caption{Arsitektur \textit{Knowledge – Based System} pada umumnya. \parencite{Puppe1993}}
+    \label{fig:arsitektur kbs}
+\end{figure}
+
+Secara umum, perbedaan dari arsitektur KBS \textit{as – is} dan juga rancangan arsitektur KBS \textit{to – be} terletak pada representasi pengetahuan yang dibangun, di mana dalam kasus yang dikembangkan, akan digunakan \textit{knowledge graph}, sedangkan pada arsitektur \textit{as – is} tidak dispesifikkan representasi pengetahuan apa yang digunakan. Selain itu, dalam arsitektur yang dikembangkan tidak memiliki \textit{explainable component} yang disebabkan batasan yang diterapkan dalam pengembangan tugas besar ini. 
