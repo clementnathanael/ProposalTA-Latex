@@ -7,3 +7,4 @@ Update Latex Proposal TA Clement
 - 27 Okt 2025: Bab I, II, III
 - 29 Okt 2025: Minor Formatting
 - 1 Nov 2025: Update Bab III
+- 4 Nov 2025: Revisi Pasca Bimbingan, Update Bab IV
