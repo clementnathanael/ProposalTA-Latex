@@ -1,5 +1,5 @@
 # II4091 Proposal Tugas Akhir
-# Clement Nathanael Lim / 18222032
+## Clement Nathanael Lim / 18222032
 
 Update Latex Proposal TA Clement
 
