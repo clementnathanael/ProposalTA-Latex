@@ -3,13 +3,232 @@
 % Silahkan edit sesuai kebutuhan, baik menambah atau mengurangi \section, \subsection
 %==================================================================
 
-\chapter[EVALUASI]{\\ EVALUASI}
+\chapter[RENCANA SELANJUTNYA]{\\ RENCANA SELANJUTNYA}
 
-\section{Metode Evaluasi}
-Lorem ipsum
+\section{Tahapan Implementasi dan Evaluasi}
+Tahapan implementasi dan evaluasi dari pembuatan \textit{knowledge – based system} antara lain terdiri atas 5 hal, yakni:
+\begin{enumerate}
+    \item Identifikasi
+        \begin{enumerate}
+            \item Pada tahap identifikasi, akan ditentukan pakar yang menjadi sumber pengetahuan dari KBS ini. Pakar merupakan seorang dokter spesialis paru – paru. Setelah terjadi kesepakatan dengan pakar, selanjutnya, saya akan melakukan diskusi terkait dengan ruang lingkup penyakit paru-paru yang akan dicakup dalam prototipe awal (misalnya, fokus pada 5-7 penyakit paling umum seperti Tuberkulosis, PPOK, Pneumonia, Asma, dan sebagainya).
+            \item Selain itu, akan dilakukan konfigurasi semua perangkat lunak yang dibutuhkan, yakni Neo4j Desktop sebagai basis data graf untuk representasi pengetahuan.
+        \end{enumerate}
+    \item Konseptualisasi
+        \begin{enumerate}
+            \item Pada tahapan konseptualisasi, saya akan melakukan beberapa sesi wawancara dengan pakar untuk mengumpulkan pengetahuan tentang hubungan antara penyakit, gejala, faktor risiko, dan pemeriksaan. 
+            \item Setiap dilakukannya sesi wawancara, saya akan membuat \textit{knowledge graph} berdasarkan dengan keterhubungan antara setiap komponen yang didapat selama sesi wawancara.
+        \end{enumerate}
+    \item Formalisasi
+        \begin{enumerate}
+            \item Pada tahapan ini, akan ditulis \textit{script} dalam bahasa Cypher untuk membuat semua \textit{node} (Penyakit, Gejala) dan relasi (MEMILIKI\_GEJALA, dan sebagainya) di dalam Neo4j berdasarkan pengetahuan dari tahap sebelumnya.
+            \item Setelah \textit{script} ditulis, \textit{script} akan dijalankan untuk mengisi basis data Neo4j. Setelah itu, untuk validasi, akan dibuat \textit{query} sederhana untuk memverifikasi bahwa semua data telah dimasukkan dengan benar sesuai dengan model.
+        \end{enumerate}
+    \item Implementasi
+        \begin{enumerate}
+            \item Pada tahap implementasi, akan dibangun mesin inferensi yang akan terintegrasi dengan basis data Neo4j. Tahapan pembuatan / alur dari mesin inferensinya, antara lain:
+            \begin{enumerate}
+                \item Melakukan koneksi dengan \textit{database} Neo4j.
+                \item Menerima \textit{input} gejala dari pengguna.
+                \item Membangun \textit{query} Cypher secara dinamis.
+                \item Mengeksekusi \textit{query} dan menerima hasil.
+                \item Menjalankan algoritma \textit{scoring} untuk menghitung dan mengurutkan diagnosis.
+                \item Mengembalikan hasil akhir yang sudah terstruktur untuk ditampilkan.
+            \end{enumerate}
+        \end{enumerate}
+    \item Pengujian
+        \begin{enumerate}
+            \item Verifikasi sistem.
+                \begin{enumerate}
+                    \item Akan dilakukan evaluasi apakah program dapat menangani \textit{input }pengguna dengan benar (misalnya, \textit{input} angka, \textit{input} yang dipisahkan koma) dan apakah \textit{output} yang ditampilkan sesuai dengan format yang telah dirancang.
+                    \item Selanjutnya, akan diukur waktu eksekusi dari saat pengguna memasukkan gejala hingga hasil diagnosis tercetak sebagai \textit{output}.
+                \end{enumerate}
+            \item Validasi pengetahuan.
+                \begin{enumerate}
+                    \item Untuk memastikan \textit{knowledge graph} yang disusun sudah tepat, pakar akan menjalankan program secara langsung atau didampingi oleh pengembang. Pakar akan diminta untuk memasukkan serangkaian skenario kasus klinis (kombinasi gejala). Untuk setiap skenario, akan dicek apakah diagnosis yang benar muncul di peringkat 1, 2, atau 3 teratas dari \textit{output}.
+                \end{enumerate}
+        \end{enumerate}
+\end{enumerate}
 
-\section{Kesimpulan}
-Lorem ipsum
+\section{Lingkungan, Alat, dan Bahan}
+Bagian ini merinci semua komponen perangkat keras, perangkat lunak, dan sumber daya data yang diperlukan untuk pengembangan, pengujian, dan eksekusi dari \textit{knowledge-based system} yang akan dibangun.
 
-\section{Saran}
-Lorem ipsum
+\subsection{Lingkungan Pengembangan}
+Lingkungan merujuk pada \textit{platform} dan konfigurasi di mana sistem akan dikembangkan dan dijalankan.
+
+\begin{enumerate}
+    \item Perangkat Keras (\textit{Hardware}) \\
+    Seluruh proses pengembangan, pengujian, dan eksekusi akan dilakukan pada satu unit MacBook Pro. Spesifikasi dari perangkat yang digunakan:
+        \begin{enumerate}
+            \item Model: MacBook Pro (13-\textit{inch}, M1, 2020)
+            \item Prosesor: Apple M1 \textit{chip}.
+            \item Memori (RAM): 8 GB \textit{Unified Memory}.
+            \item Penyimpanan: 256 GB \textit{Solid State Drive} (SSD).   
+        \end{enumerate}
+
+    \item Sistem Operasi (\textit{Operating System})
+        \begin{enumerate}
+            \item Pengembangan akan dilakukan pada sistem operasi macOS Tahoe 26.1. Lingkungan berbasis UNIX dari macOS menyediakan dukungan \textit{native} yang sangat baik untuk alat-alat pengembangan yang akan digunakan.
+        \end{enumerate}
+\end{enumerate}
+
+\subsection{Alat Pengembangan (\textit{Tools})}
+Alat merujuk pada perangkat lunak, \textit{library}, dan \textit{framework} yang akan digunakan untuk membangun sistem.
+\begin{enumerate}
+    \item Bahasa Pemrograman.
+        \begin{enumerate}
+            \item Python (versi 3.11): Python dipilih sebagai bahasa utama karena \textit{syntax} yang mudah dipahami, ekosistem \textit{library} yang mumpuni, dan dukungan \textit{driver} resmi untuk Neo4j.
+        \end{enumerate}
+            
+    \item Basis Data.
+        \begin{enumerate}
+            \item Neo4j Desktop (\textit{Community Edition}): Neo4j Desktop merupakan versi \textit{desktop} dari Neo4j yang akan digunakan sebagai \textit{server} basis data graf lokal. Neo4j Desktop menyediakan antarmuka visual yang sangat membantu, yaitu Neo4j Browser, yang akan digunakan untuk memvisualisasikan, memvalidasi, dan melakukan \textit{query} pada \textit{knowledge graph} selama tahap pengembangan.
+        \end{enumerate}
+    \item \textit{Integrated Development Tools} (IDE).
+        \begin{enumerate}
+            \item Visual Studio Code (VS Code): VS Code dipilih sebagai editor kode utama karena ringan, fleksibel, dan memiliki ekosistem \textit{extension} yang sangat luas.
+        \end{enumerate}
+    \item \textit{Virtual Environment}.
+        \begin{enumerate}
+            \item venv (\textit{Python Standard Library}): venv merupakan lingkungan virtual akan digunakan untuk mengisolasi \textit{dependency} proyek agar tidak berkonflik dengan instalasi Python sistem.
+        \end{enumerate}
+    \item \textit{Version Control}.
+        \begin{enumerate}
+            \item GitHub: GitHub digunakan sebagai \textit{platform hosting repository} Git secara daring untuk penyimpanan versi dari kode (\textit{versioning}) dan manajemen proyek.
+        \end{enumerate}
+    \item Terminal.
+        \begin{enumerate}
+            \item Aplikasi Terminal: Terminal bawaan yang digunakan sebagai antarmuka utama untuk menjalankan dan berinteraksi dengan program \textit{knowledge – based system} yang dibangun.
+        \end{enumerate}
+\end{enumerate}
+
+\subsection{Bahan Penelitian}
+Bahan merujuk pada sumber data dan pengetahuan yang menjadi \textit{input} untuk membangun dan mengevaluasi sistem.
+
+\begin{enumerate}
+    \item Pengetahuan Domain.
+        \begin{enumerate}
+            \item Sumber utama pengetahuan adalah pakar (dokter spesialis paru – paru).
+            \item Pengetahuan dari pakar akan diakusisi dari hasil wawancara terstruktur, catatan diskusi kasus, dan diagram konseptual yang dibuat selama sesi akuisi pengetahuan. Pengetahuan ini mencakup hubungan antara penyakit, gejala, faktor risiko, dan pemeriksaan yang relevan.
+        \end{enumerate}
+    \item Data Uji.
+        \begin{enumerate}
+            \item Serangkaian kombinasi gejala yang representatif dari kasus-kasus nyata akan disusun bersama pakar. 
+            \item Skenario-skenario ini akan digunakan sebagai data \textit{input} selama tahap validasi untuk mengukur akurasi dan relevansi dari hasil diagnosis yang diberikan oleh sistem.
+        \end{enumerate}
+\end{enumerate}
+
+\section{Estimasi Biaya}
+Karena pada dasarnya \textit{software} dari Neo4j \textit{Community Edition} gratis, maka biaya pengembangan dari \textit{knowledge – based system} tidak ada untuk saat ini (akan ditambahkan jika terdapat biaya tambahan).
+
+\section{Linimasa Pengerjaan}
+Berikut ini merupakan \textit{gantt chart} rencana pengerjaan \textit{knowledge – based system}. 
+
+\begin{table}[htbp]
+    \centering
+    \caption{\textit{Gantt chart} perencanaan pengembangan \textit{knowledge – based system}.}
+    \includegraphics[scale=0.5]{gambar/gantt chart.png}
+    \label{tab:gantt–chart}
+\end{table}
+
+Berdasarkan \textit{gantt chart} tersebut, akan dialokasikan sekitar 5 bulan untuk melakukan pengembangan KBS, mulai dari fase identifikasi pada minggu pertama dan kedua di bulan Januari, fase konseptualisasi pada minggu ketiga bulan Januari hingga minggu kedua bulan Februari, fase formalisasi dari minggu ketiga bulan Februari hingga minggu ketiga bulan Maret, fase implementasi dari minggu keempat bulan Maret hingga minggu pertama bulan Mei, dan terakhir untuk fase pengujian dimulai dari minggu kedua hingga minggu kelima bulan Mei.
+
+Terdapat \textit{spare} waktu 2 bulan (Juni dan Juli) untuk menjadi cadangan jika semisal terjadi hambatan dalam fase tertentu yang dapat mengakibatkan mundurnya \textit{timeline} yang sudah ditetapkan.
+
+\section{Analisis Risiko dan Mitigasi}
+Berikut ini merupakan analisis risiko dan mitigasi dari \textit{knowledge – based system} yang akan dibangun.
+
+    \begin{longtable}{|c|l|m{4cm}|c|m{4.5cm}|}
+    
+    % --- DEFINISI HEADER DAN FOOTER ---
+    
+    % Caption dan header untuk halaman pertama
+    \caption{Analisis Risiko dan Mitigasi Proyek} \label{tab:risiko-mitigasi} \\
+    \hline
+    \textbf{No.} & \textbf{Kategori Risiko} & \textbf{Deskripsi Risiko} & \textbf{Tingkat} & \textbf{Rencana Mitigasi} \\ \hline
+    \endfirsthead
+    
+    % Header yang akan diulang di setiap halaman lanjutan (halaman 2, 3, dst.)
+    % \caption[]{(Lanjutan)} \\ % Caption lanjutan (opsional)
+    \hline
+    \textbf{No.} & \textbf{Kategori Risiko} & \textbf{Deskripsi Risiko} & \textbf{Tingkat} & \textbf{Rencana Mitigasi} \\ \hline
+    \endhead
+    
+    % Footer yang akan muncul di bagian bawah setiap halaman KECUALI halaman terakhir
+    \hline
+    \multicolumn{5}{|r|}{\textit{Lanjut ke halaman berikutnya...}} \\
+    \hline
+    \endfoot
+    
+    % Footer yang hanya akan muncul di bagian bawah halaman TERAKHIR
+    \hline
+    \endlastfoot
+    
+    % --- ISI TABEL (BADAN TABEL) DIMULAI DI SINI ---
+    
+    \multicolumn{5}{|l|}{\textbf{A. Risiko Pengetahuan (\textit{Knowledge-related})}} \\ \hline
+    1. & Akuisisi Pengetahuan & Ketersediaan waktu pakar terbatas. Jadwal pakar (dokter spesialis) yang cukup padat dapat menyebabkan sesi wawancara dan akuisisi pengetahuan tertunda. & Tinggi & 1. Menjadwalkan semua sesi jauh-jauh hari. \newline 2. Menyiapkan agenda yang jelas untuk memaksimalkan efisiensi. \newline 3. Meminta rekomendasi literatur sebagai cadangan. \\ \hline
+    2. & Akuisisi Pengetahuan & Pengetahuan yang ambigu atau implisit. Pakar memberikan informasi yang sulit untuk diformalkan ke dalam struktur graf. & Sedang & 1. Menggunakan teknik wawancara berbasis skenario. \newline 2. Melakukan validasi iteratif dengan menunjukkan model graf sementara kepada pakar. \\ \hline
+    3. & Validasi Pengetahuan & Akurasi sistem rendah. Hasil diagnosis prototipe tidak sesuai dengan ekspektasi pakar saat evaluasi. & Tinggi & 1. Memvalidasi \textit{knowledge graph} secara iteratif setiap kali ada \textit{input} pengetahuan yang baru. \newline 2. Merancang algoritma \textit{scoring} yang fleksibel untuk penyesuaian berdasarkan umpan balik. \\ \hline
+    \multicolumn{5}{|l|}{\textbf{B. Risiko Teknis (\textit{Technical})}} \\ \hline
+    4. & Desain Basis Data & Skema graf tidak cukup. Skema yang dirancang di awal kurang lengkap. & Sedang & 1. Memulai dengan skema inti yang sederhana dan mengembangkannya secara iteratif. \newline 2. Memvalidasi skema graf dengan pakar di awal proyek. \\ \hline
+    5. & Implementasi & Logika inferensi tidak optimal. \textit{Query Cypher} atau algoritma \textit{scoring} menghasilkan diagnosis yang kurang relevan. & Sedang & 1. Memulai dengan algoritma \textit{scoring} yang sederhana dan melakukan evaluasi dari perhitungan yang dilakukan. \newline 2. Mencatat (\textit{log}) semua \textit{query Cypher} untuk kemudahan \textit{debugging}. \\ \hline
+    6. & Implementasi & Kesulitan teknis yang tidak terduga, seperti masalah dalam menghubungkan Python dengan Neo4j. & Rendah & 1. Menggunakan \textit{library} dan \textit{driver} yang stabil dan terdokumentasi dengan baik. \newline 2. Mengisolasi lingkungan pengembangan menggunakan \texttt{virtual environment}. \\ \hline
+    \multicolumn{5}{|l|}{\textbf{C. Risiko Manajemen Proyek (\textit{Project Management})}} \\ \hline
+    7. & Ruang lingkup & Pelebaran ruang lingkup (\textit{Scope Creep}). Muncul keinginan untuk menambah fitur atau penyakit di tengah pengerjaan. & Sedang & 1. Menetapkan batasan ruang lingkup yang jelas dan terukur di awal. \newline 2. Mencatat semua ide tambahan yang \textit{feasible} untuk dilanjutkan di tesis. \\ \hline
+    8. & Jadwal & Keterlambatan proyek. Salah satu fase pengembangan memakan waktu lebih lama dari yang dijadwalkan. & Sedang & 1. Membuat linimasa pengerjaan (\textit{gantt chart}) yang realistis. \newline 2. Melakukan evaluasi mingguan untuk identifikasi keterlambatan dini. \\ \hline
+    \end{longtable}
+    
+\section{Rencana Evaluasi}
+Rencana evaluasi ini bertujuan untuk mengukur kualitas, akurasi, dan kegunaan dari prototipe KBS yang telah dibangun. Evaluasi akan dilakukan dalam dua fase utama, yakni verifikasi sistem untuk memastikan fungsionalitas teknis, serta validasi pengetahuan untuk mengukur keakuratan dan manfaat dari hasil diagnosis. Evaluasi akan menggunakan pendekatan campuran (\textit{mixed-method}), yang menggabungkan metrik kuantitatif dan \textit{feedback} kualitatif.
+    \begin{enumerate}
+        \item Verifikasi sistem: Akan dilakukan pengujian fungsional dan non – fungsional oleh pengembang.
+        \item Validasi pengetahuan: Akan dilakukan melalui validasi berbasis skenario oleh pakar yang merupakan bentuk dari \textit{user acceptance testing} (UAT).
+    \end{enumerate}
+
+\subsection{Prosedur Evaluasi}
+Berikut ini merupakan prosedur evaluasi yang akan dilakukan:
+    \begin{enumerate}
+        \item Pengujian fungsional. \\
+            Pengujian fungsional memastikan setiap komponen program berjalan sesuai rancangan. Berikut ini merupakan \textit{use – case} pengujian fungsional yang akan dilakukan:
+            \begin{enumerate}
+                \item Program dapat dimulai tanpa adanya \textit{error}.
+                \item Daftar gejala dapat ditampilkan di antarmuka pengguna.
+                \item Program dapat menangani berbagai format \textit{input} dari pengguna (misalnya, angka tunggal, beberapa angka dipisah koma,\textit{ input}yang salah/tidak valid).
+                \item Program berhasil terhubung ke basis data Neo4j.
+                \item Format \textit{output} teks (hasil diagnosis dan penjelasan) sesuai dengan yang telah dirancang.
+            \end{enumerate}
+        \item Pengujian non – fungsional. \\
+            Pengujian non – fungsional bertujuan untuk mengukur performa sistem dalam menjalankan tugas yang diberikan. Berikut ini merupakan \textit{use – case} pengujian non - fungsional yang akan dilakukan:
+            \begin{enumerate}
+                \item Pengukuran waktu proses eksekusi program saat pengguna selesai memasukkan gejala hingga hasil diagnosis pertama kali tercetak di antarmuka. Pengujian akan dilakukan sebanyak 10 kali dengan skenario yang berbeda, lalu dihitung waktu rata-ratanya.
+                \item Perhitungan kompleksitas waktu dan ruang dari sistem yang sudah dibuat.
+            \end{enumerate}
+        \item Validasi pengetahuan KBS. \\
+        Sebelum sesi evaluasi, pengembang akan bekerja sama dengan pakar untuk menyusun 10-15 skenario kasus klinis. Setiap skenario berisi daftar gejala yang representatif untuk penyakit tertentu, dengan tingkat kesulitan yang bervariasi dengan tujuan untuk mengukur akurasi dari sistem. Prosedur yang dapat dilakukan, antara lain sebagai berikut:
+        \begin{enumerate}
+            \item Pakar akan diberikan prototipe program.
+            \item Untuk setiap skenario kasus, pakar akan memasukkan gejala yang sesuai ke dalam program.
+            \item Pakar akan mengamati dan mencatat daftar diagnosis terurut yang dihasilkan oleh sistem.
+        \end{enumerate}
+        Untuk setiap skenario, dicatat apakah diagnosis yang benar muncul di peringkat 1 (top 1), peringkat 3 teratas (top 3), atau tidak sama sekali. Selain itu, setelah sesi, pakar akan memberikan \textit{feedback} terkait dengan hasil, ataupun \textit{knowledge engineer} dapat melakukan wawancara singkat dengan pakar untuk mengevaluasi hasil yang diberikan.
+        
+        \item Validasi kegunaan untuk pengguna umum. \\
+        Pengetesan sistem juga akan melibatkan pengguna umum untuk memastikan bahwa pengguna umum juga dapat memahami penggunaan dari sistem. Pengguna akan mencoba untuk memasukkan gejala yang dialami, lalu melihat hasil diagnosis dan juga penjelasan yang diberikan, apakah dipahami atau tidak penjelasan hasil diagnosis tersebut.
+    \end{enumerate}
+    
+\subsection{Kriteria Keberhasilan}
+Prototipe sistem akan dianggap berhasil jika memenuhi kriteria berikut:
+\begin{enumerate}
+    \item Verifikasi:
+        \begin{enumerate}
+            \item Semua \textit{use – case} dalam \textit{list} pengujian fungsional berhasil dieksekusi.
+            \item Rata-rata waktu respons diagnosis berada di bawah 3 detik, sesuai dengan kebutuhan non-fungsional.
+            \item Kompleksitas ruang dan waktu algoritma tidak melebihi O($2^n$).
+        \end{enumerate}
+    \item Validasi:
+        \begin{enumerate}
+            \item Akurasi top 3 (diagnosis yang benar muncul dalam 3 peringkat teratas) mencapai minimal 80\% dari seluruh skenario uji.
+            \item Pakar memberikan penilaian positif secara umum, menyatakan bahwa sistem bermanfaat sebagai alat bantu diagnosis awal.
+            \item Pengguna umum menyatakan bahwa \textit{output} teks jelas dan dapat dipahami.
+        \end{enumerate}
+\end{enumerate}

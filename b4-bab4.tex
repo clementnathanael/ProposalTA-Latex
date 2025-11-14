@@ -11,11 +11,22 @@ Bab ini akan menguraikan secara rinci mengenai proses desain dan rancangan dari 
 
 \subsection{Tahapan Pertama}
 
-Pada tahapan pertama ini, untuk membantu memahami proses dari \textit{knowledge – based system} yang akan dibangun, akan didefinisikan diagram alur proses dari KBS ini, antara lain sebagai berikut:
+Pada tahapan pertama ini, untuk membantu memahami proses dari \textit{knowledge – based system} yang akan dibangun, akan didefinisikan diagram alur proses dari \textit{knowledge – based system as is}, antara lain sebagai berikut:
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.1]{gambar/flowchart.jpg}
+    \caption{Diagram alur proses KBS \textit{as – is}.}
+    \label{fig:kg}
+\end{figure}
+
+Gambar arsitektur di atas menggambarkan alur kinerja dari \textit{knowledge – based system} pada umumnya, di mana akan menggunakan \textit{rule – based}, sehingga dari setiap fakta yang didapat, akan dilakukan pengecekan di dalam \textit{rule}, apakah sesuai atau tidak. Lalu, jika sesuai dan ada fakta baru, fakta tersebut akan ditambahkan ke dalam \textit{working memory}. Selanjutnya, sistem akan mengurutkan hasil diagnosis serta menampilkan daftar diagnosis yang mungkin kepada pengguna.
+
+Selanjutnya, berikut ini merupakan gambar dari \textit{knowledge – based system} yang akan dibangun menggunakan \textit{knowledge graph}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.1]{gambar/flowchart new.jpg}
     \caption{Diagram alur proses dari KBS yang akan dibangun.}
     \label{fig:kg}
 \end{figure}
@@ -88,8 +99,52 @@ Pada tahapan kedua ini, akan dirancang arsitektur dari \textit{knowledge – bas
 \end{enumerate}
 
 \subsection{Tahapan Ketiga}
-Pada tahapan ini, akan dirancang struktur dasar dari \textit{knowledge graph} yang akan dibuat. 
-(To be continued)
+Pada tahapan ini, akan dirancang struktur dasar atau skema dari \textit{knowledge graph} yang akan dibangun. Skema ini berfungsi sebagai \textit{blueprint} yang mendefinisikan jenis-jenis informasi apa saja yang dapat disimpan dan bagaimana mereka dapat saling terhubung. Proses perancangan skema ini akan dilakukan secara iteratif dengan melibatkan pakar dalam proses pengembangannya. Langkah – langkah penyusunan \textit{knowledge graph} antara lain sebagai berikut:
+    \begin{enumerate}
+        \item Menentukan ruang lingkup pengembangan. \\
+        Sebelum mendefinisikan entitas, ruang lingkup dari \textit{knowledge graph} harus dibatasi dengan jelas. Tujuannya adalah untuk memastikan \textit{knowledge graph} dapat menjawab pertanyaan-pertanyaan spesifik yang relevan dengan tujuan sistem. Beberapa pertanyaan yang akan dijawab oleh \textit{knowledge graph}, antara lain:
+            \begin{enumerate}
+                \item "Diberikan sekumpulan gejala, apa saja kemungkinan penyakit paru-paru yang diderita?"
+                \item "Apa saja faktor risiko yang terkait dengan suatu penyakit?"
+                \item "Pemeriksaan apa yang biasanya digunakan untuk mendiagnosis penyakit ini?"
+            \end{enumerate}
+
+    \item Mengidentifikasi tipe entitas (\textit{node}). \\
+    Berdasarkan pertanyaan kunci, akan diidentifikasi kategori-kategori utama dari informasi yang akan menjadi \textit{node} di dalam graf. Setiap kategori akan diberi label yang jelas, antara lain:
+        \begin{enumerate}
+            \item Penyakit: Entitas utama yang merepresentasikan kondisi medis. Contoh: "Tuberkulosis", "Pneumonia", "Asma".
+            \item Gejala: Entitas yang merepresentasikan tanda atau keluhan. Contoh: "Batuk kronis", "Demam", "sesak napas".
+            \item Faktor risiko: Entitas yang merepresentasikan kondisi atau kebiasaan yang meningkatkan risiko. Contoh: "Merokok", "Paparan debu silika".
+            \item Pemeriksaan: Entitas yang merepresentasikan prosedur diagnostik yang perlu dilakukan. Contoh: "\textit{Rontgen} dada", "Tes dahak BTA".
+        \end{enumerate}
+
+    \item Mengidentifikasi tipe relasi (\textit{edge}). \\
+        Selanjutnya, didefinisikan hubungan semantik yang akan menjadi \textit{edge} (panah) yang menghubungkan antar \textit{node}. Relasi ini harus memiliki arah dan nama yang deskriptif.
+        \begin{enumerate}
+            \item MEMILIKI\_GEJALA: Menghubungkan \textit{node} Penyakit ke \textit{node} Gejala. 
+            Contoh: (:Penyakit \{nama: "Tuberkulosis"\})-[:MEMILIKI\_GEJALA]->(:Gejala \{nama: "Batuk Kronis"\}).
+
+            \item MEMILIKI\_FAKTOR\_RISIKO: Menghubungkan \textit{node} Penyakit ke \textit{node} FaktorRisiko. 
+            Contoh: (:Penyakit \{nama: "PPOK"\})-[:MEMILIKI\_FAKTOR\_RISIKO]->(:FaktorRisiko \{nama: "Merokok"\}).
+
+            \item DIDIAGNOSIS\_DENGAN: Menghubungkan \textit{node} Penyakit ke \textit{node} Pemeriksaan. 
+            Contoh: (:Penyakit \{nama: "Pneumonia"\})-[:DIDIAGNOSIS\_DENGAN]->(:Pemeriksaan \{nama: "Rontgen Dada"\}).
+        \end{enumerate}
+
+    \item Mendefinisikan properti  untuk \textit{node} dan relasi. \\
+    Untuk menambah informasi, setiap \textit{node} dan relasi akan memiliki properti (atribut).          Properti ini akan menjadi \textit{input} bagi algoritma \textit{scoring} diagnosis.
+    \begin{enumerate}
+        \item Properti \textit{node}: Setiap \textit{node} minimal akan memiliki properti nama (misal: `nama: "Tuberkulosis"`) dan deskripsi (misal: `deskripsi: "Penyakit infeksi yang disebabkan oleh bakteri..."`).
+        \item Properti relasi: Untuk mendukung logika \textit{scoring} pada mesin inferensi, relasi MEMILIKI\_GEJALA akan memiliki properti tambahan. Contohnya:
+            \begin{enumerate}
+                \item Bobot: Nilai numerik (misal 1 hingga 5) yang menandakan seberapa kuat atau umum sebuah gejala untuk suatu penyakit. Gejala kunci akan memiliki bobot tinggi.
+                \item Frekuensi: Keterangan kualitatif seperti "Umum", "Jarang", "Spesifik".
+            \end{enumerate}
+    \end{enumerate}
+
+    \item Melakukan finalisasi skema graf. \\
+    Hasil akhir dari semua langkah di atas adalah sebuah dokumen skema graf yang berisi diagram visual dan penjelasan dari semua tipe \textit{node}, tipe relasi, properti yang dimiliki, serta aturan bagaimana mereka boleh terhubung. Skema ini akan berfungsi sebagai kamus data dan panduan utama selama tahap formalisasi (populasi basis data).
+\end{enumerate}
 
 \section{Hasil Desain}
 Berdasarkan hasil perancangan komponen pada tahapan kedua, berikut ini merupakan arsitektur \textit{knowledge – based system} yang akan dibuat:

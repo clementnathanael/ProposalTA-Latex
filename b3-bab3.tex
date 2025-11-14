@@ -6,35 +6,46 @@
 \chapter[ANALISIS MASALAH]{\\ ANALISIS MASALAH}
 
 \section{Analisis Kondisi Saat Ini}
+Kondisi pengembangan \textit{knowledge - based system} (KBS) saat ini, khususnya dalam domain kesehatan, ditandai adanya perubahan, yakni dari sistem pakar berbasis aturan (\textit{rule-based}) yang kaku menuju arsitektur yang lebih dinamis dan fleksibel berbasis graf (\textit{knowledge graph}). Sistem berbasis aturan tradisional dengan logika IF-THEN terbukti tidak mampu menangani kompleksitas, ambiguitas, dan volume data medis modern yang sangat besar \parencite{Sutton2020}.
+
+Sebaliknya, penggunaan \textit{knowledge graph} memungkinkan pemodelan hubungan yang rumit dan \textit{multi-level}, seperti interaksi antara gen, protein, obat, dan penyakit secara lebih intuitif dan mudah untuk dikembangkan (skalabilitas). Adopsi pendekatan ini merupakan respons langsung terhadap tantangan yang muncul dari perkembangan teknologi di dunia kesehatan, mulai dari rekam medis elektronik (EHR) yang terstruktur, data genomik, hingga literatur penelitian dan catatan klinis yang tidak terstruktur. \textit{Knowledge graph} dirancang untuk mengintegrasikan data ini menjadi satu jaringan pengetahuan yang koheren dan dapat diproses oleh mesin \parencite{Cui2025}. \textit{Knowledge graph} dapat mengintegrasikan data ini menjadi satu jaringan pengetahuan yang koheren dan dapat diproses oleh mesin.
+
+Pada praktiknya, perkembangan KBS di bidang kesehatan telah menunjukkan hasil yang signifikan di berbagai domain aplikasi. Salah satu area domain biomedis yang sedang gencar dilakukan penelitian adalah adanya penemuan dan penargetan ulang obat (\textit{drug discovery and repurposing}). \textit{Knowledge graph} seperti HetioNet, yang merupakan suatu \textit{knowledge graph} menggunakan Neo4j, digunakan untuk mengidentifikasi interaksi baru antara obat, komponen struktur biologis manusia, dan penyakit \parencite{Himmelstein2017}. 
+
+Selain bidang penelitian, berbagai KBS juga dikembangkan untuk mendeteksi adanya penyakit. Sebagai contoh, saat masa pandemi, KBS dikembangkan untuk menganalisis literatur COVID-19 dan memprediksi obat-obatan yang sudah ada yang berpotensi efektif untuk pengobatan. Selain itu, dalam dukungan keputusan klinis, KBS diterapkan untuk penyakit kompleks seperti kanker, di mana sistem dapat mengintegrasikan data genomik, proteomik, dan klinis pasien untuk merekomendasikan terapi yang dipersonalisasi \parencite{Cui2025}.
+
+Hasil dari implementasi ini bervariasi dari identifikasi kandidat gen baru hingga peningkatan akurasi model prediksi risiko penyakit. Sebagaimana dirangkum dalam penelitian yang dilakukan oleh \textcite{Cui2025}, kondisi saat ini menunjukkan bahwa meskipun banyak dari sistem ini masih dalam tahap prototipe penelitian, dampaknya dalam menyajikan pengetahuan medis yang dapat dijelaskan (\textit{explainable}) dan terstruktur sudah cukup menjanjikan. Tren terkini bahkan mendorong integrasi dengan \textit{large language models} (LLM), di mana \textit{knowledge graph} berperan sebagai representasi pengetahuan yang mumpuni untuk memastikan sistem dapat menghasilkan keputusan yang faktual dan dapat dipercaya.
+
+\section{Analisis Masalah Saat Ini}
 Dalam pembangunan sistem pakar, terdapat beberapa tahapan yang akan dilakukan untuk memastikan bahwa hasil akhir dari sistem yang dikembangkan akurat dan dapat digunakan oleh pengguna. Namun, tentu di setiap tahapan akan terdapat permasalahan yang mungkin dapat menghambat proses pengerjaaan sistem tersebut. Oleh karena itu, akan ditentukan beberapa masalah yang mungkin dihadapi berdasarkan tahapan pembangunan dari KBS, yakni identifikasi, konseptualisasi, formalisasi, implementasi, dan juga pengujian \parencite{Barrett1992}.
 \begin{enumerate}
     \item Identifikasi – Penentuan pakar yang sesuai.
-    \begin{itemize}
+    \begin{enumerate}
         \item Dalam menyusun \textit{knowledge – based system} dengan menggunakan pakar sebagai akuisisi pengetahuan, maka menemukan pakar yang benar-benar kompeten, bisa berkomunikasi dengan baik, dan memiliki waktu untuk kesulitan tersendiri.
         \item Kemampuan komunikasi dari pakar menjadi penentu dalam keberhasilan \textit{knowledge graph} yang dibangun, di mana jika pakar sulit berkomunikasi atau tidak memberikan detail yang cukup jelas, maka pengembang akan kesulitan untuk menentukan fakta – fakta apa saja yang perlu untuk dimodelkan.
-    \end{itemize}
+    \end{enumerate}
     \item Konseptualisasi – Pemodelan data yang tidak tepat.
-    \begin{itemize}
+    \begin{enumerate}
         \item Dalam memodelkan data yang akan dipakai di dalam graf, tentu harus dilakukan pemodelan data dalam bentuk graf tersebut. Bagian pemodelan data graf menjadi bagian yang cukup krusial karena akan menjadi fondasi dari keseluruhan model yang akan dibangun.
         \item Beberapa kesalahan yang mungkin terjadi, antara lain adalah generalisasi suatu gejala tertentu. Sebagai contoh, terdapat berbagai macam batuk, antara lain batuk berdahak, batuk kering, dan sebagainya. Namun, untuk kemudahan, maka kita akan men-generalisasikan menjadi satu \textit{node} "batuk" saja. 
         \item Hal ini tentu dapat menyebabkan kesalahan diagnosis, karena bisa saja gejala batuk tersebut merupakan indikasi spesifik suatu penyakit tertentu, yang dapat berakibat kepada kesalahan diagnosis penyakit.
-    \end{itemize}
+    \end{enumerate}
     \item Formulasi – \textit{Knowledge graph} yang tidak dapat mengenal konteks.
-    \begin{itemize}
+    \begin{enumerate}
         \item Sistem pakar tidak memiliki pemahaman mendasar tentang dunia, di mana sistem hanya mengikuti aturan secara harafiah tanpa adanya pemahaman konteks. 
         \item Semisal sistem pakar dalam bidang kesehatan menerima \textit{input} dari pengguna. Jika pengguna salah memasukkan jumlah obat yang diminum, yakni 50 obat, padahal seharusnya hanya sekitar 5 obat, maka sistem pakar akan memproses data tersebut secara terang – terangan tanpa berpikir di balik layar jika ingin bukan merupakan hal yang logis (jika memang tidak ada \textit{constraints} / batasan yang membatasinya).
         \item Sistem pakar juga didesain untuk bisa menjawab hal apapun yang bahkan diluar domain pengetahuannya, asalkan \textit{input} yang diterima masih dalam format yang sesuai. Semisal sistem pakar didesain untuk menganalisis penyakit TBC. Namun, jika ternyata terdapat pasien yang men– \textit{input} gejala Pneumonia, maka mungkin saja sistem masih dapat memberikan diagnosis untuk pasien tersebut berdasarkan gejala yang sesuai dari penyakit yang lain (jika misalkan penyakit yang di–\textit{input} oleh pasien memang diprogram secara eksplisit).
-    \end{itemize}
+    \end{enumerate}
     \item Implementasi – Kinerja dan skalabilitas dari \textit{knowledge graph}.
-    \begin{itemize}
+    \begin{enumerate}
         \item Saat \textit{knowledge graph} yang dibuat menjadi sangat besar, \textit{query} yang tadinya cepat bisa menjadi sangat lambat. Implementasi graf tanpa dilakukan optimasi akan menimbulkan \textit{bottleneck} jika data yang diterima berskala besar.
         \item Selain itu, implementasi dari \textit{rule engine} yang cukup banyak dan hanya untuk melakukan inferensi untuk satu penyakit saja dapat membuat sistem menjadi sangat lambat.
-    \end{itemize}
+    \end{enumerate}
     \item Evaluasi – Proses Perawatan dan pemeliharaan / \textit{maintenance}.
-    \begin{itemize}
+    \begin{enumerate}
         \item Ketika jumlah aturan bertambah (dari ratusan menjadi ribuan), menjadi sangat sulit untuk menambahkan aturan baru tanpa menimbulkan kontradiksi atau efek samping dari aturan yang sudah ada.
         \item Penting bagi pengembang untuk terus memperbarui sistem pakarnya, terutama untuk domain kesehatan, di mana penyakit tidak bersifat statis, namun bersifat dinamis, yang artinya setiap hari pasti ada informasi baru terkait suatu penyakit (semisal ada gejala baru, atau ada metode penyembuhan yang baru yang lebih efektif, dan sebagainya).
-    \end{itemize}
+    \end{enumerate}
     
     
 \end{enumerate}
@@ -45,41 +56,41 @@ Berdasarkan analisis masalah di atas, dapat disimpulkan bahwa \emph{knowledge-ba
 \subsection{Identifikasi Masalah Pengguna}
 Sistem ini akan memiliki dua kelompok pengguna utama, antara lain adalah pasien (pengguna umum) dan dokter spesialis (pakar).
 \begin{enumerate}
-    \item Pasien / pengguna umum
-    \begin{itemize}
+    \item Pasien / pengguna umum.
+    \begin{enumerate}
         \item Kesulitan mendapatkan informasi awal yang terpercaya mengenai gejala penyakit paru-paru yang mereka alami.
         \item Merasa cemas dan tidak tahu kapan harus mengambil tindakan untuk berkonsultasi dengan dokter.
         \item Membutuhkan penjelasan yang mudah dipahami tentang kemungkinan penyakit berdasarkan gejala yang dirasakan.
-    \end{itemize}
-    \item Dokter spesialis / pakar
-    \begin{itemize}
+    \end{enumerate}
+    \item Dokter spesialis / pakar.
+    \begin{enumerate}
         \item Membutuhkan alat bantu untuk mempercepat proses diagnosis awal, terutama untuk kasus-kasus umum.
         \item Menghadapi tantangan dalam mengelola dan menghubungkan pengetahuan medis yang kompleks dan terus berkembang (misalnya, hubungan antara gejala, faktor risiko, dan penyakit).
         \item Membutuhkan \textit{platform} untuk memvalidasi dan memperbarui basis pengetahuan secara sistematis dan fleksibel.
-    \end{itemize}
+    \end{enumerate}
 \end{enumerate}
 
 \subsection{Kebutuhan Fungsional}
 Kebutuhan fungsional akan mendefinisikan fitur – fitur spesifik yang harus dimiliki oleh sistem sebagai solusi dari setiap peluang masalah yang sudah didefinisikan di bagian sebelumnya, antara lain:
 \begin{enumerate}
     \item Sistem memerlukan seorang \textit{knowledge engineer} untuk dapat mengelola pengetahuan yang didapat dari pakar.
-        \begin{itemize}
+        \begin{enumerate}
             \item Dengan adanya \textit{knowledge engineer}, hubungan antara pakar dengan sistem dapat terfailitasi dengan baik. 
-        \end{itemize}
+        \end{enumerate}
     \item Sistem dapat menerima \textit{input} berupa gejala dari pasien.
-        \begin{itemize}
+        \begin{enumerate}
             \item Sistem harus dapat menerima \textit{input} berupa nama gejala penyakit secara spesifik, misalnya sistem harus memiliki \textit{node} untuk gejala "batuk", "batuk kering", "batuk berdahak", dan sebagainya, bukan hanya satu \textit{node} umum untuk batuk.
             \item Hal ini bertujuan untuk menghindari generalisasi berlebih dari suatu gejala penyakit yang dapat menyebabkan kesalahan / ketidakakuratan dalam diagnosis.
-        \end{itemize}
+        \end{enumerate}
     \item Sistem dapat mengeluarkan \textit{output} berupa diagnosis penyakit berdasarkan gejala yang dimasukkan pasien.
-        \begin{itemize}
+        \begin{enumerate}
             \item Sistem harus dapat mengeluarkan \textit{output} berupa diagnosis penyakit berdasarkan analisis gejala yang dimasukkan pasien melalui \textit{knowledge graph}.
-        \end{itemize}
+        \end{enumerate}
     \item Sistem harus memiliki mekanisme validasi \textit{input} dan pembatasan konteks.
-        \begin{itemize}
+        \begin{enumerate}
             \item Sistem harus memiliki aturan validasi untuk \textit{input} pengguna, misalnya menolak \textit{input} yang salah atau tidak logis (misal sistem dapat memberikan peringatan jika ada data umur pasien yang tidak logis, misal berusia 200 tahun).
             \item Sistem juga dapat memberikan pemberitahuan jika tidak memiliki pengetahuan nama penyakit berdasarkan gejala - gejala yang sudah diberikan.
-        \end{itemize}
+        \end{enumerate}
 \end{enumerate}
 
 \subsection{Kebutuhan Non – Fungsional}
@@ -87,128 +98,427 @@ Kebutuhan non-fungsional mendefinisikan standar kualitas dan performa sistem unt
 
 \begin{enumerate}
     \item Kinerja dan Skalabilitas (\textit{Scalability}).
-        \begin{itemize}
+        \begin{enumerate}
             \item Waktu respons sistem untuk melakukan \emph{query} diagnosis harus di bawah 3 detik, bahkan ketika basis pengetahuan sudah besar.
             \item Arsitektur sistem harus dirancang untuk dapat menangani pertumbuhan \emph{knowledge graph} hingga ratusan \textit{node} dan relasi tanpa penurunan kinerja yang signifikan, yang dapat diukur dengan menggunakan kompleksitas ruang dan waktu dari \textit{knowledge graph} tersebut.
-        \end{itemize}
+        \end{enumerate}
     \item Pemeliharaan (\emph{Maintainability}).
-        \begin{itemize}
+        \begin{enumerate}
             \item Desain basis pengetahuan (skema graf) harus fleksibel dan modular, memungkinkan penambahan tipe entitas atau relasi baru di masa depan tanpa harus merombak keseluruhan sistem.
-        \end{itemize}
+        \end{enumerate}
     \item Keandalan (\emph{Reliability}).
-        \begin{itemize}
+        \begin{enumerate}
             \item Sistem harus memberikan hasil diagnosis yang konsisten untuk \textit{input} gejala yang sama. 
             \item Setiap perubahan pada basis pengetahuan harus melalui proses validasi oleh pakar untuk memastikan akurasi tetap terjaga.
-        \end{itemize}
+        \end{enumerate}
     % \item Kemudahan Penggunaan (\emph{Usability}).
-    %     \begin{itemize}
+    %     \begin{enumerate}
     %         \item Antarmuka untuk pengguna awam harus intuitif dan menggunakan bahasa non-teknis.
     %         \item Antarmuka untuk pakar harus efisien dan mempermudah proses pengelolaan pengetahuan yang kompleks.
-    %     \end{itemize}
+    %     \end{enumerate}
 \end{enumerate}
 
 \section{Analisis Pemilihan Solusi}
 Karena penggunaan graf pengetahuan (\textit{knowledge graph}) telah ditetapkan sebagai metode representasi utama, analisis ini berfokus pada pemilihan strategi akuisisi pengetahuan dan konstruksi \textit{knowledge graph} yang paling optimal. Pemilihan strategi akan menentukan kualitas, akurasi, dan kelayakan implementasi sistem. Untuk itu, akan dilakukan evaluasi terhadap tiga alternatif strategi menggunakan metode \textit{Analytic Hierarchy Process} (AHP).
 
 \subsection{Alternatif Solusi}
-Terdapat tiga alternatif utama untuk strategi akuisisi pengetahuan dalam konteks tugas akhir ini:
+Terdapat tiga alternatif utama untuk strategi akuisisi pengetahuan dari \textit{knowledge graph} dalam konteks Tugas Akhir ini:
 
 \begin{enumerate}
     \item Akuisisi manual berbasis pakar (\emph{Expert – Driven}):
-        \begin{itemize}
+        \begin{enumerate}
             \item Pendekatan ini mengandalkan interaksi langsung dengan pakar domain (dokter spesialis) untuk mengekstraksi, memformalkan, dan memvalidasi pengetahuan. 
             \item  Proses melibatkan wawancara terstruktur, studi literatur yang direkomendasikan pakar, dan pemodelan manual setiap entitas dan relasi ke dalam \textit{knowledge graph}.
             \item Keunggulan utamanya adalah akurasi dan kualitas pengetahuan yang sangat tinggi, namun kelemahannya adalah proses yang lambat dan tidak skalabel.
-        \end{itemize}
+        \end{enumerate}
 
     \item Akuisisi otomatis berbasis teks (NLP – \textit{Driven}):
-        \begin{itemize}
+        \begin{enumerate}
             \item Pendekatan ini memanfaatkan teknik \emph{Natural Language Processing} (NLP) untuk secara otomatis mengekstrak entitas dan relasi dari teks yang besar (misalnya, artikel jurnal medis). 
             \item Tujuannya adalah membangun \textit{knowledge graph} dalam skala besar dengan intervensi manusia minimal. 
             \item Keunggulannya adalah skalabilitas dan efisiensi, namun sangat rentan menghasilkan informasi yang salah (\emph{noise}) dan memiliki kompleksitas implementasi yang sangat tinggi.
-        \end{itemize}
+        \end{enumerate}
         
     \item Pendekatan \textit{hybrid} (otomatis dengan validasi pakar):
-        \begin{itemize}
+        \begin{enumerate}
             \item Strategi ini menggabungkan kedua pendekatan sebelumnya. Sebuah \textit{pipeline} NLP digunakan untuk mengekstrak pengetahuan secara otomatis, yang kemudian disajikan kepada pakar untuk divalidasi (disetujui, ditolak, atau diubah) sebelum dimasukkan ke dalam \textit{knowledge graph} final.
             \item Pendekatan ini menyeimbangkan antara kualitas dan skala, namun memiliki kompleksitas implementasi tertinggi karena memerlukan pengembangan sistem ekstraksi otomatis dan antarmuka validasi.
-        \end{itemize}
+        \end{enumerate}
 \end{enumerate}
 
 \subsection{Analisis Penentuan Solusi}
 Analisis dilakukan melalui tiga langkah utama AHP, antara lain adalah penyusunan hierarki, perbandingan berpasangan untuk menghitung bobot, dan sintesis hasil.
 
 \begin{enumerate}
-    \item Penyusunan hierarki \\
+    \item Penyusunan hierarki. \\
     Hierarki keputusan terdiri dari tujuan (memilih strategi akuisisi), empat kriteria utama, dan tiga alternatif yang sudah disebutkan. Kriteria yang digunakan adalah:
-        \begin{itemize}
-        \item K1: Kualitas \& akurasi pengetahuan \\
+        \begin{enumerate}
+        \item K1: Kualitas \& akurasi pengetahuan. \\
         Seberapa valid dan andal pengetahuan yang dihasilkan.
-        \item K2: Kelayakan implementasi (\textit{feasibility}) untuk TA \\
+        \item K2: Kelayakan implementasi (\textit{feasibility}) untuk TA. \\
         Seberapa realistis strategi ini untuk diselesaikan dalam batasan waktu dan sumber daya tugas akhir.
         \item K3: Skalabilitas dan cakupan pengetahuan \\
-        Kemampuan strategi untuk membangun \textit{knowledge graph} yang luas dan mudah diperluas.
-        \item K4: Efisiensi keterlibatan pakar \\
+        Kemampuan strategi untuk membangun. \textit{knowledge graph} yang luas dan mudah diperluas.
+        \item K4: Efisiensi keterlibatan pakar. \\
         Seberapa efisien waktu pakar dimanfaatkan.
-        \end{itemize}
+        \end{enumerate}
         
-    \item Perbandingan \& perhitungan bobot \\
-        Pada tahap ini, penilaian kualitatif diubah menjadi angka menggunakan Skala Saaty (1-9).
-        \begin{enumerate}
-            \item Penentuan bobot prioritas kriteria \\
-                Kriteria-kriteria di atas dibandingkan satu sama lain untuk menentukan tingkat kepentingannya.
-                \begin{itemize}
-                    \item Justifikasi penilaian:
-                    \begin{itemize}
-                        \item K1 vs K2 (akurasi vs kelayakan): Akurasi dinilai lebih penting (nilai 3) daripada Kelayakan. Sebuah sistem yang layak dibuat namun tidak akurat tidak memiliki nilai guna.
-                        \item K1 vs K3 (akurasi vs skalabilitas): Akurasi dinilai cukup lebih penting (nilai 5) daripada skalabilitas. Lebih baik memiliki \textit{knowledge graph} kecil yang akurat daripada \textit{knowledge graph} besar yang tidak akurat.
-                        \item K1 vs K4 (akurasi vs efisiensi pakar): Akurasi dinilai sangat lebih penting (nilai 7) daripada efisiensi waktu pakar. Kualitas hasil akhir adalah prioritas utama.
-                        \item K2 vs K3 (kelayakan vs skalabilitas): Kelayakan (\textit{feasbility}) untuk tugas akhir dinilai lebih penting (nilai 3) daripada skalabilitas. Proyek harus dapat diselesaikan terlebih dahulu sebelum memikirkan skalabilitas.
-                    \end{itemize}
-                \end{itemize} 
-                Penilaian kualitatif ini menghasilkan matriks pada Tabel \ref{tab:matriks-kriteria} dan bobot prioritas yang dihitung darinya.
+    \item Perbandingan \& perhitungan bobot. \\
+        Pada tahap ini, penilaian kualitatif diubah menjadi angka menggunakan Skala Saaty (1-9). Hasil dari perhitungan ini adalah perbandingan pemilihan bobot dan penentuan solusi mana yang akan dipilih berdasarkan perhitungan bobot tersebut.
+\end{enumerate}
 
-                \begin{table}[h!]
-                \centering
-                \caption{Matriks perbandingan berpasangan dan bobot prioritas kriteria}
-                \label{tab:matriks-kriteria}
-                \begin{tabular}{|l|c|c|c|c||c|}
-                \hline
-                Kriteria & K1 & K2 & K3 & K4 & Bobot Prioritas \\ \hline
-                K1: Akurasi         & 1   & 3   & 5   & 7   & 0.55 \\ \hline
-                K2: Kelayakan TA    & 1/3 & 1   & 3   & 5   & 0.26 \\ \hline
-                K3: Skalabilitas    & 1/5 & 1/3 & 1   & 3   & 0.13 \\ \hline
-                K4: Efisiensi Pakar & 1/7 & 1/5 & 1/3 & 1   & 0.06 \\ \hline
-                \end{tabular}
-                \end{table}
-                
-            \item Evaluasi alternatif terhadap setiap kriteria \\
-            Sekarang, setiap alternatif dievaluasi untuk masing-masing kriteria.
-            \begin{itemize}
-                \item Terhadap K1: Akurasi pengetahuan
-                    \begin{itemize}
-                        \item Justifikasi: Manual paling akurat (diawasi 100\% oleh pakar). \textit{Hybrid} di urutan kedua (ada validasi). Otomatis paling tidak akurat (risiko \emph{noise}). Manual dinilai lebih akurat (7) dari otomatis dan sedikit lebih akurat (3) dari \textit{Hybrid}.
-                        \item Hasil Bobot: Manual (0.63), \textit{Hybrid} (0.27), Otomatis (0.10).
-                    \end{itemize}
-                \item Terhadap K2: Kelayakan implementasi Tugas Akhir
-                    \begin{itemize}
-                        \item Justifikasi: Manual paling layak (risiko teknis rendah). Otomatis dan \textit{Hybrid} tidak begitu \textit{feasible} karena memerlukan keahlian NLP yang berada di luar lingkup Tugas Akhir ini. Manual dinilai mutlak lebih layak (9) dari otomatis dan sangat lebih layak (7) dari \textit{Hybrid}.
-                        \item Hasil Bobot: Manual (0.70), \textit{Hybrid} (0.20), Otomatis (0.10).
-                    \end{itemize}
-                \item Terhadap K3: Skalabilitas
-                    \begin{itemize}
-                        \item Justifikasi: Otomatis paling skalabel (memproses ribuan dokumen). \textit{Hybrid} di urutan kedua. Manual sangat tidak skalabel. Otomatis dinilai sangat lebih skalabel (7) dari Manual.
-                        \item Hasil Bobot: Otomatis (0.65), \textit{Hybrid} (0.25), Manual (0.10).
-                    \end{itemize}
-                \item Terhadap K4: Efisiensi keterlibatan pakar
-                    \begin{itemize}
-                        \item Justifikasi: Otomatis paling efisien (intervensi pakar minimal). \textit{Hybrid} membutuhkan waktu untuk validasi. Manual paling boros karena membutuhkan waktu lama dari  pakar. Otomatis dinilai sangat lebih efisien (7) dari manual.
-                        \item Hasil Bobot: Otomatis (0.62), \textit{Hybrid} (0.27), Manual (0.11).
-                    \end{itemize}
-                \end{itemize}
+\subsection{Penentuan Bobot Prioritas Kriteria}
+Kriteria-kriteria di atas dibandingkan satu sama lain untuk menentukan tingkat kepentingannya.
+    \begin{enumerate}
+        \item Justifikasi penilaian:
+            \begin{enumerate}
+                \item K1 vs K2 (Akurasi vs Kelayakan): Akurasi dinilai lebih penting (nilai 3) daripada kelayakan. Sebuah sistem yang layak dibuat namun tidak akurat tidak memiliki nilai guna.
+                \item K1 vs K3 (Akurasi vs Skalabilitas): Akurasi dinilai cukup lebih penting (nilai 5) daripada skalabilitas. Lebih baik memiliki \textit{knowledge graph} kecil yang akurat daripada \textit{knowledge graph} besar yang tidak akurat.
+                \item K1 vs K4 (Akurasi vs Efisiensi Pakar): Akurasi dinilai sangat lebih penting (nilai 7) daripada efisiensi waktu pakar. Kualitas hasil akhir adalah prioritas utama.
+                \item K2 vs K3 (Kelayakan vs Skalabilitas): Kelayakan (\textit{feasibility}) untuk tugas akhir dinilai lebih penting (nilai 3) daripada skalabilitas. Proyek harus dapat diselesaikan terlebih dahulu sebelum memikirkan skalabilitas.
+            \end{enumerate}
+    
+    
+            Hasil dari perbandingan tersebut dapat dilihat pada matriks Tabel \ref{tab:matriks-kriteria}.
+            
+            \begin{table}[h!]
+            \centering
+            \caption{Matriks perbandingan berpasangan untuk tiap kriteria}
+            \label{tab:matriks-kriteria}
+            \begin{tabular}{|l|c|c|c|c|}
+            \hline
+            \textbf{Kriteria} & \textbf{K1} & \textbf{K2} & \textbf{K3} & \textbf{K4} \\ \hline
+            K1: Akurasi         & 1   & 3   & 5   & 7   \\ \hline
+            K2: Kelayakan TA    & 1/3 & 1   & 3   & 5   \\ \hline
+            K3: Skalabilitas    & 1/5 & 1/3 & 1   & 3   \\ \hline
+            K4: Efisiensi Pakar & 1/7 & 1/5 & 1/3 & 1   \\ \hline
+            \end{tabular}
+            \end{table}
+    
+        \item Rincian perhitungan bobot prioritas kriteria:
+                \begin{enumerate}
+                    \item Langkah 1: Menjumlahkan setiap kolom matriks. \\
+                        Setiap kolom dari matriks perbandingan (dengan nilai pecahan diubah ke desimal) dijumlahkan.
+                        \begin{enumerate}
+                            \item Jumlah Kolom K1: $1.000 + 0.333 + 0.200 + 0.143 = 1.676$
+                            \item Jumlah Kolom K2: $3.000 + 1.000 + 0.333 + 0.200 = 4.533$
+                            \item Jumlah Kolom K3: $5.000 + 3.000 + 1.000 + 0.333 = 9.333$
+                            \item Jumlah Kolom K4: $7.000 + 5.000 + 3.000 + 1.000 = 16.000$
+                        \end{enumerate}
+                    
+                    \item Langkah 2: Normalisasi matriks. \\
+                        Setiap elemen dalam matriks perbandingan awal (Tabel \ref{tab:matriks-kriteria}) dibagi dengan total kolomnya masing-masing. Rincian perhitungannya adalah sebagai berikut:
+                        \begin{enumerate}
+                            \item Perhitungan untuk baris K1 (Akurasi):
+                                \begin{enumerate}
+                                    \item Kolom K1: $\frac{1.000}{1.676} = 0.597$
+                                    \item Kolom K2: $\frac{3.000}{4.533} = 0.662$
+                                    \item Kolom K3: $\frac{5.000}{9.333} = 0.536$
+                                    \item Kolom K4: $\frac{7.000}{16.000} = 0.438$
+                                \end{enumerate}
+                            \item Perhitungan untuk baris K2 (Kelayakan TA):
+                                \begin{enumerate}
+                                    \item Kolom K1: $\frac{0.333}{1.676} = 0.199$
+                                    \item Kolom K2: $\frac{1.000}{4.533} = 0.221$
+                                    \item Kolom K3: $\frac{3.000}{9.333} = 0.321$
+                                    \item Kolom K4: $\frac{5.000}{16.000} = 0.313$
+                                \end{enumerate}
+                            \item Perhitungan untuk baris K3 (Skalabilitas):
+                                \begin{enumerate}
+                                    \item Kolom K1: $\frac{0.200}{1.676} = 0.119$
+                                    \item Kolom K2: $\frac{0.333}{4.533} = 0.073$
+                                    \item Kolom K3: $\frac{1.000}{9.333} = 0.107$
+                                    \item Kolom K4: $\frac{3.000}{16.000} = 0.188$
+                                \end{enumerate}
+                            \item Perhitungan untuk baris K4 (Efisiensi Pakar):
+                                \begin{enumerate}
+                                    \item Kolom K1: $\frac{0.143}{1.676} = 0.085$
+                                    \item Kolom K2: $\frac{0.200}{4.533} = 0.044$
+                                    \item Kolom K3: $\frac{0.333}{9.333} = 0.036$
+                                    \item Kolom K4: $\frac{1.000}{16.000} = 0.063$
+                                \end{enumerate}
+                        \end{enumerate}
+                        Hasil dari perhitungan ini kemudian disusun ke dalam Tabel \ref{tab:matriks-normalisasi-kriteria}.
+            
+                        \begin{table}[H]
+                        \centering
+                        \caption{Matriks normalisasi untuk tiap kriteria}
+                        \label{tab:matriks-normalisasi-kriteria}
+                        \begin{tabular}{|l|c|c|c|c|}
+                        \hline
+                        Kriteria & K1 & K2 & K3 & K4 \\ \hline
+                        K1: Akurasi         & 0.597 & 0.662 & 0.536 & 0.438 \\ \hline
+                        K2: Kelayakan TA    & 0.199 & 0.221 & 0.321 & 0.313 \\ \hline
+                        K3: Skalabilitas    & 0.119 & 0.073 & 0.107 & 0.188 \\ \hline
+                        K4: Efisiensi Pakar & 0.085 & 0.044 & 0.036 & 0.063 \\ \hline
+                        \end{tabular}
+                        \end{table}
+        
+                    \item Langkah 3: Menghitung Rata-rata Baris (Hasil Bobot Prioritas). \\
+                    Bobot prioritas adalah nilai rata-rata dari setiap baris pada matriks ternormalisasi.
+                    \begin{enumerate}
+                        \item Bobot K1 (Akurasi): \\ $\frac{0.597 + 0.662 + 0.536 + 0.438}{4} = 0.558 \approx \mathbf{0.55}$
+                        \item Bobot K2 (Kelayakan): \\ $\frac{0.199 + 0.221 + 0.321 + 0.313}{4} = 0.264 \approx \mathbf{0.26}$
+                        \item Bobot K3 (Skalabilitas): \\ $\frac{0.119 + 0.073 + 0.107 + 0.188}{4} = 0.122 \approx \mathbf{0.13}$
+                        \item Bobot K4 (Efisiensi): \\ $\frac{0.085 + 0.044 + 0.036 + 0.063}{4} = 0.057 \approx \mathbf{0.06}$
+                    \end{enumerate}
+                \end{enumerate}
+                Dengan demikian, didapatkan matriks hasil prioritas sebagai berikut:
+                    \begin{table}[h!]
+                    \centering
+                    \caption{Matriks perbandingan berpasangan dan bobot prioritas kriteria}
+                    \label{tab:matriks-kriteria}
+                    \begin{tabular}{|l|c|c|c|c||c|}
+                    \hline
+                    \textbf{Kriteria} & \textbf{K1} & \textbf{K2} & \textbf{K3} & \textbf{K4} & \textbf{Bobot Prioritas} \\ \hline
+                    K1: Akurasi         & 1   & 3   & 5   & 7   & 0.55 \\ \hline
+                    K2: Kelayakan TA    & 1/3 & 1   & 3   & 5   & 0.26 \\ \hline
+                    K3: Skalabilitas    & 1/5 & 1/3 & 1   & 3   & 0.13 \\ \hline
+                    K4: Efisiensi Pakar & 1/7 & 1/5 & 1/3 & 1   & 0.06 \\ \hline
+                    \end{tabular}
+                    \end{table}
+    \end{enumerate}
+
+\subsection{Perhitungan Evaluasi Alternatif Terhadap Setiap Kriteria}
+Setiap alternatif dievaluasi untuk masing-masing kriteria melalui proses normalisasi matriks perbandingan berpasangan.
+        \begin{enumerate}
+            \item Terhadap K1: Akurasi pengetahuan
+                \begin{enumerate}
+                    \item Justifikasi: Manual paling akurat (diawasi 100\% oleh pakar). \textit{Hybrid} di urutan kedua (ada validasi). Otomatis paling tidak akurat (risiko \emph{noise}). Manual dinilai lebih akurat (7) dari otomatis dan sedikit lebih akurat (3) dari \textit{Hybrid}.
+                    \item Rincian Perhitungan:
+                        \begin{enumerate}
+                            \item Matriks Perbandingan (dalam desimal)
+                                \begin{table}[H] \centering
+                                \caption{Matriks Perbandingan Alternatif terhadap K1}
+                                \label{tab:comp-k1}
+                                \begin{tabular}{|l|c|c|c|} \hline
+                                vs K1 & Manual & \textit{Hybrid} & Otomatis \\ \hline
+                                Manual   & 1.000 & 3.000 & 7.000 \\
+                                \textit{Hybrid}  & 0.333 & 1.000 & 3.000 \\
+                                Otomatis & 0.143 & 0.333 & 1.000 \\ \hline
+                                \textbf{Jumlah} & \textbf{1.476} & \textbf{4.333} & \textbf{11.000} \\ \hline
+                                \end{tabular}
+                                \end{table}
+                            \item Matriks Ternormalisasi
+                                \begin{itemize}
+                                    \item Perhitungan untuk baris Manual:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{1.000}{1.476} = 0.677$
+                                            \item Kolom \textit{Hybrid}: $\frac{3.000}{4.333} = 0.692$
+                                            \item Kolom Otomatis: $\frac{7.000}{11.000} = 0.636$
+                                        \end{itemize}
+                                    \item Perhitungan untuk baris \textit{Hybrid}:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{0.333}{1.476} = 0.226$
+                                            \item Kolom \textit{Hybrid}: $\frac{1.000}{4.333} = 0.231$
+                                            \item Kolom Otomatis: $\frac{3.000}{11.000} = 0.273$
+                                        \end{itemize}
+                                    \item Perhitungan untuk baris Otomatis:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{0.143}{1.476} = 0.097$
+                                            \item Kolom \textit{Hybrid}: $\frac{0.333}{4.333} = 0.077$
+                                            \item Kolom Otomatis: $\frac{1.000}{11.000} = 0.091$
+                                        \end{itemize}
+                                \end{itemize}
+                                Hasilnya disusun dalam Tabel \ref{tab:norm-k1}.
+                                \begin{table}[H] \centering
+                                \caption{Matriks Ternormalisasi untuk Kriteria K1}
+                                \label{tab:norm-k1}
+                                \begin{tabular}{|l|c|c|c|} \hline
+                                vs K1 & Manual & \textit{Hybrid} & Otomatis \\ \hline
+                                Manual   & 0.677 & 0.692 & 0.636 \\
+                                \textit{Hybrid}   & 0.226 & 0.231 & 0.273 \\
+                                Otomatis & 0.097 & 0.077 & 0.091 \\ \hline
+                                \end{tabular}
+                                \end{table}
+                            \item Rata-rata Baris (Hasil Bobot)
+                                \begin{itemize}
+                                    \item Bobot Manual: $\frac{0.677 + 0.692 + 0.636}{3} = 0.668 \approx \mathbf{0.66}$
+                                    \item Bobot \textit{Hybrid}: $\frac{0.226 + 0.231 + 0.273}{3} = 0.243 \approx \mathbf{0.24}$
+                                    \item Bobot Otomatis: $\frac{0.097 + 0.077 + 0.091}{3} = 0.088 \approx \mathbf{0.08}$
+                                \end{itemize}
+                        \end{enumerate}
+                    \item Hasil Bobot: Manual (0.66), \textit{Hybrid} (0.24), Otomatis (0.08).
+                \end{enumerate}
+            
+            \item Terhadap K2: Kelayakan implementasi Tugas Akhir
+                \begin{enumerate}
+                    \item Justifikasi: Manual paling layak (risiko teknis rendah). Otomatis dan \textit{Hybrid} tidak begitu \textit{feasible} karena memerlukan keahlian NLP yang berada di luar lingkup Tugas Akhir ini. Manual dinilai mutlak lebih layak (9) dari otomatis dan sangat lebih layak (7) dari \textit{Hybrid}.
+                    \item Rincian Perhitungan:
+                        \begin{enumerate}
+                             \item Matriks Perbandingan (dalam Desimal)
+                                \begin{table}[H] \centering
+                                \caption{Matriks Perbandingan Alternatif terhadap K2}
+                                \label{tab:comp-k2}
+                                \begin{tabular}{|l|c|c|c|} \hline
+                                vs K2 & Manual & \textit{Hybrid} & Otomatis \\ \hline
+                                Manual   & 1.000 & 7.000 & 9.000 \\
+                                \textit{Hybrid}   & 0.143 & 1.000 & 2.000 \\
+                                Otomatis & 0.111 & 0.500 & 1.000 \\ \hline
+                                \textbf{Jumlah} & \textbf{1.254} & \textbf{8.500} & \textbf{12.000} \\ \hline
+                                \end{tabular}
+                                \end{table}
+                            \item Matriks Ternormalisasi
+                                 \begin{itemize}
+                                    \item Perhitungan untuk baris Manual:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{1.000}{1.254} = 0.797$
+                                            \item Kolom \textit{Hybrid}: $\frac{7.000}{8.500} = 0.824$
+                                            \item Kolom Otomatis: $\frac{9.000}{12.000} = 0.750$
+                                        \end{itemize}
+                                    \item Perhitungan untuk baris \textit{Hybrid}:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{0.143}{1.254} = 0.114$
+                                            \item Kolom \textit{Hybrid}: $\frac{1.000}{8.500} = 0.118$
+                                            \item Kolom Otomatis: $\frac{2.000}{12.000} = 0.167$
+                                        \end{itemize}
+                                    \item Perhitungan untuk baris Otomatis:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{0.111}{1.254} = 0.089$
+                                            \item Kolom \textit{Hybrid}: $\frac{0.500}{8.500} = 0.059$
+                                            \item Kolom Otomatis: $\frac{1.000}{12.000} = 0.083$
+                                        \end{itemize}
+                                \end{itemize}
+                                Hasilnya disusun dalam Tabel \ref{tab:norm-k2}.
+                                \begin{table}[H] \centering
+                                \caption{Matriks Ternormalisasi untuk Kriteria K2}
+                                \label{tab:norm-k2}
+                                \begin{tabular}{|l|c|c|c|} \hline
+                                vs K2 & Manual & Hybrid & Otomatis \\ \hline
+                                Manual   & 0.797 & 0.824 & 0.750 \\
+                                Hybrid   & 0.114 & 0.118 & 0.167 \\
+                                Otomatis & 0.089 & 0.059 & 0.083 \\ \hline
+                                \end{tabular}
+                                \end{table}
+                            \item Rata-rata Baris (Hasil Bobot)
+                                \begin{itemize}
+                                    \item Bobot Manual: $\frac{0.797 + 0.824 + 0.750}{3} = 0.790 \approx \mathbf{0.79}$
+                                    \item Bobot Hybrid: $\frac{0.114 + 0.118 + 0.167}{3} = 0.133 \approx \mathbf{0.13}$
+                                    \item Bobot Otomatis: $\frac{0.089 + 0.059 + 0.083}{3} = 0.077 \approx \mathbf{0.10}$
+                                \end{itemize}
+                        \end{enumerate}
+                    \item Hasil Bobot: Manual (0.79), \textit{Hybrid} (0.13), Otomatis (0.10).
+                \end{enumerate}
+
+\item Terhadap K3: Skalabilitas
+                \begin{enumerate}
+                    \item Justifikasi: Otomatis paling skalabel karena dapat memproses ribuan dokumen. Hybrid di urutan kedua, dan Manual sangat tidak skalabel. Berdasarkan penilaian, Otomatis dinilai sangat lebih skalabel (7) dari Manual, dan sedikit lebih skalabel (3) dari Hybrid. Selain itu, Hybrid juga dinilai sedikit lebih skalabel (3) dari Manual.
+                    \item Rincian Perhitungan:
+                        \begin{enumerate}
+                            \item Matriks Perbandingan (dalam Desimal)
+                                \begin{table}[H] \centering
+                                \caption{Matriks Perbandingan Alternatif terhadap K3}
+                                \label{tab:comp-k3}
+                                \begin{tabular}{|l|c|c|c|} \hline
+                                vs K3 & Manual & Hybrid & Otomatis \\ \hline
+                                Manual   & 1.000 & 0.333 & 0.143 \\
+                                Hybrid   & 3.000 & 1.000 & 0.333 \\
+                                Otomatis & 7.000 & 3.000 & 1.000 \\ \hline
+                                \textbf{Jumlah} & \textbf{11.000} & \textbf{4.333} & \textbf{1.476} \\ \hline
+                                \end{tabular}
+                                \end{table}
+                            \item Matriks Ternormalisasi
+                                \begin{itemize}
+                                    \item Perhitungan untuk baris Manual:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{1.000}{11.000} = 0.091$
+                                            \item Kolom Hybrid: $\frac{0.333}{4.333} = 0.077$
+                                            \item Kolom Otomatis: $\frac{0.143}{1.476} = 0.097$
+                                        \end{itemize}
+                                    \item Perhitungan untuk baris Hybrid:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{3.000}{11.000} = 0.273$
+                                            \item Kolom Hybrid: $\frac{1.000}{4.333} = 0.231$
+                                            \item Kolom Otomatis: $\frac{0.333}{1.476} = 0.226$
+                                        \end{itemize}
+                                    \item Perhitungan untuk baris Otomatis:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{7.000}{11.000} = 0.636$
+                                            \item Kolom Hybrid: $\frac{3.000}{4.333} = 0.692$
+                                            \item Kolom Otomatis: $\frac{1.000}{1.476} = 0.677$
+                                        \end{itemize}
+                                \end{itemize}
+                                Hasilnya disusun dalam Tabel \ref{tab:norm-k3}.
+                                \begin{table}[H] \centering
+                                \caption{Matriks Ternormalisasi untuk Kriteria K3}
+                                \label{tab:norm-k3}
+                                \begin{tabular}{|l|c|c|c|} \hline
+                                vs K3 & Manual & Hybrid & Otomatis \\ \hline
+                                Manual   & 0.091 & 0.077 & 0.097 \\
+                                Hybrid   & 0.273 & 0.231 & 0.226 \\
+                                Otomatis & 0.636 & 0.692 & 0.677 \\ \hline
+                                \end{tabular}
+                                \end{table}
+                            \item Rata-rata Baris (Hasil Bobot)
+                                \begin{itemize}
+                                    \item Bobot Otomatis: $\frac{0.636 + 0.692 + 0.677}{3} = 0.668 \approx \mathbf{0.65}$
+                                    \item Bobot Hybrid: $\frac{0.273 + 0.231 + 0.226}{3} = 0.243 \approx \mathbf{0.25}$
+                                    \item Bobot Manual: $\frac{0.091 + 0.077 + 0.097}{3} = 0.088 \approx \mathbf{0.10}$
+                                \end{itemize}
+                        \end{enumerate}
+                    \item Hasil Bobot: Otomatis (0.65), \textit{Hybrid} (0.25), Manual (0.10).
+                \end{enumerate}
+    \item Terhadap K4: Efisiensi keterlibatan pakar
+                \begin{enumerate}
+                    \item Justifikasi: Otomatis paling efisien (intervensi pakar minimal). \textit{Hybrid} membutuhkan waktu untuk validasi. Manual paling boros karena membutuhkan waktu lama dari pakar. Otomatis dinilai sangat lebih efisien (7) dari manual, dan sedikit lebih efisien (3) dari Hybrid.
+                    \item Rincian Perhitungan:
+                        \begin{enumerate}
+                            \item Matriks Perbandingan (dalam Desimal)
+                                \begin{table}[H] \centering
+                                \caption{Matriks Perbandingan Alternatif terhadap K4}
+                                \label{tab:comp-k4}
+                                \begin{tabular}{|l|c|c|c|} \hline
+                                vs K4 & Manual & Hybrid & Otomatis \\ \hline
+                                Manual   & 1.000 & 0.333 & 0.143 \\
+                                Hybrid   & 3.000 & 1.000 & 0.333 \\
+                                Otomatis & 7.000 & 3.000 & 1.000 \\ \hline
+                                \textbf{Jumlah} & \textbf{11.000} & \textbf{4.333} & \textbf{1.476} \\ \hline
+                                \end{tabular}
+                                \end{table}
+                            \item Matriks Ternormalisasi
+                                \begin{itemize}
+                                    \item Perhitungan untuk baris Manual:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{1.000}{11.000} = 0.091$
+                                            \item Kolom Hybrid: $\frac{0.333}{4.333} = 0.077$
+                                            \item Kolom Otomatis: $\frac{0.143}{1.476} = 0.097$
+                                        \end{itemize}
+                                    \item Perhitungan untuk baris Hybrid:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{3.000}{11.000} = 0.273$
+                                            \item Kolom Hybrid: $\frac{1.000}{4.333} = 0.231$
+                                            \item Kolom Otomatis: $\frac{0.333}{1.476} = 0.226$
+                                        \end{itemize}
+                                    \item Perhitungan untuk baris Otomatis:
+                                        \begin{itemize}
+                                            \item Kolom Manual: $\frac{7.000}{11.000} = 0.636$
+                                            \item Kolom Hybrid: $\frac{3.000}{4.333} = 0.692$
+                                            \item Kolom Otomatis: $\frac{1.000}{1.476} = 0.677$
+                                        \end{itemize}
+                                \end{itemize}
+                                Hasilnya disusun dalam Tabel \ref{tab:norm-k4}.
+                                \begin{table}[H] \centering
+                                \caption{Matriks Ternormalisasi untuk Kriteria K4}
+                                \label{tab:norm-k4}
+                                \begin{tabular}{|l|c|c|c|} \hline
+                                vs K4 & Manual & Hybrid & Otomatis \\ \hline
+                                Manual   & 0.091 & 0.077 & 0.097 \\
+                                Hybrid   & 0.273 & 0.231 & 0.226 \\
+                                Otomatis & 0.636 & 0.692 & 0.677 \\ \hline
+                                \end{tabular}
+                                \end{table}
+                            \item Rata-rata Baris (Hasil Bobot)
+                                \begin{itemize}
+                                    \item Bobot Otomatis: $\frac{0.636 + 0.692 + 0.677}{3} = 0.668 \approx \mathbf{0.62}$
+                                    \item Bobot Hybrid: $\frac{0.273 + 0.231 + 0.226}{3} = 0.243 \approx \mathbf{0.27}$
+                                    \item Bobot Manual: $\frac{0.091 + 0.077 + 0.097}{3} = 0.088 \approx \mathbf{0.11}$
+                                \end{itemize}
+                        \end{enumerate}
+                    \item Hasil Bobot: Otomatis (0.62), \textit{Hybrid} (0.27), Manual (0.11).
+                \end{enumerate}
             \end{enumerate}
 
-    \item Sintesis \& keputusan akhir
+\subsection{Sintesis \& keputusan akhir}
         Bobot dari kriteria dan alternatif digabungkan untuk mendapatkan skor akhir.
         \begin{enumerate}
             \item Ringkasan bobot prioritas \\
@@ -229,11 +539,11 @@ Analisis dilakukan melalui tiga langkah utama AHP, antara lain adalah penyusunan
                     \end{table}
             \item Perhitungan skor akhir \\
             Skor akhir setiap alternatif dihitung dengan mengalikan bobot pada setiap kolom dengan bobot kriteria di atasnya.
-            \begin{itemize}
+            \begin{enumerate}
                 \item Skor Akuisisi Manual: \\ $(0.55 \times 0.63) + (0.26 \times 0.70) + (0.13 \times 0.10) + (0.06 \times 0.11) = 0.347 + 0.182 + 0.013 + 0.007 = \mathbf{0.549}$
                 \item Skor Akuisisi Otomatis: \\ $(0.55 \times 0.10) + (0.26 \times 0.10) + (0.13 \times 0.65) + (0.06 \times 0.62) = 0.055 + 0.026 + 0.085 + 0.037 = \mathbf{0.203}$
                 \item Skor Pendekatan \textit{Hybrid}: \\ $(0.55 \times 0.27) + (0.26 \times 0.20) + (0.13 \times 0.25) + (0.06 \times 0.27) = 0.149 + 0.052 + 0.033 + 0.016 = \mathbf{0.250}$
-            \end{itemize}
+            \end{enumerate}
             \item Keputusan akhir \\
               Hasil perhitungan AHP menunjukkan peringkat dari setiap alternatif, antara lain sebagai berikut:
               
@@ -250,6 +560,6 @@ Analisis dilakukan melalui tiga langkah utama AHP, antara lain adalah penyusunan
             \end{tabular}
             \end{table}
 
-            Berdasarkan analisis AHP yang komprehensif, Strategi akuisisi manual berbasis pakar terpilih sebagai pendekatan yang paling optimal untuk tugas akhir ini. Keputusan ini didasarkan pada skornya yang paling tinggi dibandingkan dengan alternatif solusi lain, di mana berasal dari keunggulannya pada dua kriteria dengan bobot tertinggi, yakni akurasi pengetahuan medis dan kelayakan implementasi. Dalam konteks tugas akhir, kualitas dan mitigasi risiko proyek lebih diutamakan daripada skalabilitas. Oleh karena itu, strategi pengembangan akan berfokus pada kolaborasi intensif dengan pakar untuk membangun sebuah \textit{knowledge graph} yang valid dan dapat dipertanggung jawabkan.
         \end{enumerate}
-\end{enumerate}
+
+Berdasarkan analisis AHP yang komprehensif, strategi akuisisi manual berbasis pakar terpilih sebagai pendekatan yang paling optimal untuk Tugas Akhir ini. Keputusan ini didasarkan pada skornya yang paling tinggi dibandingkan dengan alternatif solusi lain, di mana berasal dari keunggulannya pada dua kriteria dengan bobot tertinggi, yakni akurasi pengetahuan medis dan kelayakan implementasi. Dalam konteks tugas akhir, kualitas dan mitigasi risiko proyek lebih diutamakan daripada skalabilitas. Oleh karena itu, strategi pengembangan akan berfokus pada kolaborasi intensif dengan pakar untuk membangun sebuah \textit{knowledge graph} yang valid dan dapat dipertanggung jawabkan.
