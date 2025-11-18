@@ -260,3 +260,28 @@ Berdasarkan jurnal tersebut, berikut ini merupakan cara melakukan konstruksi \te
             \item Akan dilakukan iterasi / perulangan pada proses sebelumnya untuk memastikan akurasi dan relevansi dari HKG yang dibangun.
         \end{enumerate}
 \end{enumerate}
+
+\section{\textit{Analytical Hierarchy Process} (AHP)}
+\textit{Analytical Hierarchy Process} (AHP) adalah sebuah teori pengukuran yang dirancang untuk mengatasi masalah pengambilan keputusan yang kompleks. Menurut jurnal yang ditulis oleh \textcite{Saaty2008}, banyak keputusan melibatkan faktor-faktor tak berwujud (\textit{intangibles}) yang sulit diukur, seperti reputasi, keamanan, atau fleksibilitas. AHP menyediakan kerangka kerja matematis untuk mengukur faktor-faktor ini secara relatif dan menggabungkannya dengan faktor-faktor yang berwujud (\textit{tangibles}) untuk sampai pada sebuah keputusan yang logis dan transparan. Berdasarkan jurnal tersebut, terdapat 4 proses dalam merancang AHP, antara lain sebagai berikut:
+    \begin{enumerate}
+        \item Mendefinisikan masalah dan menyusun hierarki keputusan. \\
+            Pada tahap pertama, akan dilakukan pemecahan keputusan menjadi sebuah struktur hierarki, antara lain adalah:
+            \begin{enumerate}
+                \item Tingkat puncak: Merupakan tujuan utama (\textit{goals}).
+                \item Tingkat menengah: Kriteria dan subkriteria yang memengaruhi tujuan.
+                \item Tingkat terbawah: Alternatif pilihan yang akan dievaluasi.
+            \end{enumerate}
+        \item Membuat matriks perbandingan berpasangan. \\
+        Setelah hierarki terbentuk, dilakukan perbandingan berpasangan untuk setiap elemen pada satu tingkat terhadap elemen lain dalam tingkat yang sama, dengan mengacu pada elemen di tingkat atasnya. Pada tahapan ini, perbandingan akan didefinisikan menggunakan skala absolut 1 sampai 9, di mana kala ini menunjukkan seberapa jauh lebih penting atau dominan satu elemen dibandingkan yang lain, dengan nilai 1 dengan kriteria sama pentingnya, dan 9 adalah mutlak lebih penting. \\
+        Penilaian ini dimasukkan ke dalam matriks. Jika elemen A dinilai 3 kali lebih penting dari elemen B, maka di matriks, posisi (A,B) diisi angka 3, dan posisi (B,A) diisi kebalikannya, yaitu 1/3.
+        
+        \item Menghitung prioritas. \\
+        Dari setiap matriks perbandingan berpasangan, sebuah vektor prioritas (disebut juga bobot atau \textit{eigen vector}) dihitung. Vektor ini merepresentasikan bobot relatif dari setiap elemen. Jurnal ini menyebutkan bahwa prioritas ini dapat dihitung secara aproksimasi dengan menjumlahkan nilai di setiap baris matriks dan menormalisasikannya (membagi setiap jumlah baris dengan total jumlah keseluruhan). Hasil dari perhitungan ini adalah adanya suatu prioritas dengan bobot setiap elemen relatif terhadap induknya dalam hierarki.
+
+        \item Melakukan sintesis untuk mendapatkan prioritas global. \\
+        Tahapan terakhir adalah menggabungkan semua prioritas lokal untuk mendapatkan peringkat akhir dari setiap alternatif. Proses ini dilakukan dengan cara:
+        \begin{enumerate}
+            \item Mengalikan prioritas setiap alternatif (yang dihitung berdasarkan kriteria di atasnya) dengan bobot (prioritas) kriteria tersebut.
+            \item Menjumlahkan semua hasil perkalian bobot untuk setiap alternatif.
+        \end{enumerate}        
+    \end{enumerate}

@@ -95,6 +95,7 @@ Pada tahapan kedua ini, akan dirancang arsitektur dari \textit{knowledge – bas
             \item Komponen Wawancara: Bagian yang berfungsi untuk mendapatkan data / fakta dari pengguna. Komponen ini menyediakan daftar gejala yang akan diisi oleh pengguna untuk memasukkan gejala mereka.
             \item Komponen Akusisi Pengetahuan: Bagian yang berfungsi untuk memasukkan pengetahuan yang didapat oleh pakar ke dalam \textit{knowledge graph}. Pada tahap ini, \textit{knowledge engineer} akan memasukkan langsung ke basis data Neo4j.
             \item Komponen Hasil Sementara: Bagian ini akan menerima hasil diagnosis sementara dari DSKB dan akan melakukan perhitungan dan \textit{sorting} untuk menghasilkan diagnosis penyakit mana yang paling mungkin.
+            \item Komponen Penjelasan: Bagian ini yang akan memberikan penjelasan kepada pengguna terkait dengan hasil diagnosis yang didapatkan.
         \end{itemize}
 \end{enumerate}
 
@@ -165,4 +166,4 @@ Hasil desain arsitektur tersebut sedikit berbeda dengan arsitektur \textit{knowl
     \label{fig:arsitektur kbs}
 \end{figure}
 
-Secara umum, perbedaan dari arsitektur KBS \textit{as – is} dan juga rancangan arsitektur KBS \textit{to – be} terletak pada representasi pengetahuan yang dibangun, di mana dalam kasus yang dikembangkan, akan digunakan \textit{knowledge graph}, sedangkan pada arsitektur \textit{as – is} tidak dispesifikkan representasi pengetahuan apa yang digunakan. Selain itu, dalam arsitektur yang dikembangkan tidak memiliki \textit{explainable component} yang disebabkan batasan yang diterapkan dalam pengembangan tugas besar ini. 
+Secara umum, perbedaan dari arsitektur KBS \textit{as – is} dan juga rancangan arsitektur KBS \textit{to – be} terletak pada representasi pengetahuan yang dibangun, di mana dalam kasus yang dikembangkan, akan digunakan \textit{knowledge graph}, sedangkan pada arsitektur \textit{as – is} tidak dispesifikkan representasi pengetahuan apa yang digunakan.

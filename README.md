@@ -9,3 +9,4 @@ Update Latex Proposal TA Clement
 - 1 Nov 2025: Update Bab III
 - 4 Nov 2025: Revisi Pasca Bimbingan, Update Bab IV
 - 14 Nov 2025: Update Bab I - V, Proposal TA v0.0
+- 18 Nov 2025: Proposal TA v1.0 (Pasca bimbingan)
